@@ -3,11 +3,9 @@ import styles from "./DynamicTable.module.css";
 import _ from "lodash";
 
 const DynamicTable = (props) => {
-  const [msg, setMsg] = useState("...");
-
-  const someRef = useRef();
   const rows = props.rows;
   const cols = props.cols;
+  const [msg, setMsg] = useState("...");
   const [data, setData] = useState([rows][cols]);
 
   const handleEdit = (e,row,col) => {
