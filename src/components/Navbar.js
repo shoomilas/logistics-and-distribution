@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Navbar.module.css'
-import { BrowserRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -9,10 +9,10 @@ const Navbar = () => {
                 <Link to="/MiddlemanSolver">Zygu</Link>
             </li>
             <li>
-            <Link to="/DistributionSolver">Lypch</Link>
+                <Link to="/DistributionSolver">Lypch</Link>
             </li>
             <li>
-                <a href="#">Info</a>
+                <Link to="/">Info</Link>
             </li>
         </ul>
     )
