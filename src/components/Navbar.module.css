@@ -6,15 +6,12 @@ ul {
     display: inline-flex;
 } */
 
-.navbar {
-  /* background-color: white; */
-}
 
 .navigation {
   text-align: center;
 }
 
-.navigation > * {
+.navigation  * {
   margin-top: 10px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }

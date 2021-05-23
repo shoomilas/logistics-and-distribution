@@ -1,0 +1,21 @@
+
+.dynamic-table caption {
+    text-decoration: underline;
+    padding-bottom: 0.5em;
+}
+.dynamic-table, .dynamic-table td, .dynamic-table th {
+    border-collapse: collapse;
+    border: solid 1px grey; 
+    padding: 5px;
+    max-width: 100px;
+    font-size: large;
+}
+
+.row-header {
+    font-weight: bold;
+}
+
+.dynamic-table-div button {
+    padding: 0.3em;
+    margin: 10px;
+}
