@@ -1,14 +1,15 @@
 import React from 'react'
 import styles from './Navbar.module.css'
+import { BrowserRouter, Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
         <ul className={styles['navigation']}>
             <li>
-                <a href="#">Zygu</a>
+                <Link to="/MiddlemanSolver">Zygu</Link>
             </li>
             <li>
-                <a href="#">Lypch</a>
+            <Link to="/DistributionSolver">Lypch</Link>
             </li>
             <li>
                 <a href="#">Info</a>
