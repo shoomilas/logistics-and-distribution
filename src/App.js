@@ -1,4 +1,5 @@
 import React from 'react';
+import { MainContent } from './components/MainContent';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
         <Navbar/>
       </header>
       <article>
-        <p>Article</p>
+        <MainContent/>
       </article>
     </div>
   );
