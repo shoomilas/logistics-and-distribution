@@ -19,3 +19,11 @@
     padding: 0.3em;
     margin: 10px;
 }
+
+.dynamic-table  button {
+    margin: 1em 5px; padding: 5px;
+}
+
+.buttons {
+    text-align: right;
+}

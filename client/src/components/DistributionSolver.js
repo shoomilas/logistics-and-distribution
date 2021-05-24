@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "./DistributionSolver.module.css";
-import DynamicTable from "./DynamicTable"
+import DynamicTable from "./DynamicTableB"
 
 const DistributionSolver = () => {
   const rowsInputRef = useRef();
@@ -27,9 +27,9 @@ const DistributionSolver = () => {
       <fieldset>
         <form>
           <legend>Input Config</legend>
-          <label>Rows</label>
+          <label>Materials:</label>
           <input ref={rowsInputRef} type="number" name="rows" defaultValue="2" min="1" max ="40"/>
-          <label>Cols</label>
+          <label>Products:</label>
           <input ref={colsInputRef} type="number" name="cols" defaultValue="2" min="1" max="16"/>
         </form>
       </fieldset>
