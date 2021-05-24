@@ -5,8 +5,13 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {
+        "dataRecevied": "",
+        "gains": "",
+        "optimizeResult": [1,1,1]
+    }
 
 @app.post("/api/compute/")
 def create_computation(to_compute):
     return { "result": f"{to_compute}"}
+    

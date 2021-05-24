@@ -44,7 +44,7 @@ const DynamicTable = (props) => {
           {_.range(cols).map((col) => (
             <th scope="col">P{col}</th>
           ))}
-          <th scope="col">Limit</th>
+          <th scope="col">Constraints</th>
           <tbody>
           {_.range(rows).map((row) => (
             <tr>
@@ -84,7 +84,7 @@ const DynamicTable = (props) => {
       </center>
       <p>{msg}</p>
       <div className={styles.buttons}>
-          <button onClick={()=>console.log("Data will be sent to the server")}>Send Data</button>
+          <button onClick={() => setMsg("Data will be sent to the server")}>Send Data</button>
       </div>
     </div>
   );
