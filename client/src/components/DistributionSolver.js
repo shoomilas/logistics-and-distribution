@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "./DistributionSolver.module.css";
-import DynamicTable from "./DynamicTableB"
+import DynamicTable from "./DynamicDistributionTable"
 
 const DistributionSolver = () => {
   const rowsInputRef = useRef();
