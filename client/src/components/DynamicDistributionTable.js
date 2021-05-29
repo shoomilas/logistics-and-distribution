@@ -14,6 +14,7 @@ const DynamicTable = (props) => {
 
   const [gains, setGains] = useState(Array.from({length: cols}), () => null)
   const [pieces, setPieces] = useState(Array.from({length: cols}), () => null)
+  const [piecesMax, setPiecesMax] = useState(Array.from({length: cols}), () => null)
   const [constraints, setConstraints] = useState(Array.from({length: rows}), () => null)
 
   const handleChange2d = (arr, setter, row, column, value) => {
@@ -53,13 +54,19 @@ const DynamicTable = (props) => {
   } 
 
   const handlePiecesEdit = (e,col) => {
-    let val = parseInt(e.currentTarget.textContent) 
-    // setMsg(`pieces[${col}] = ${val}`)
-    // console.log(`pieces: ${val}, ${col}`);
+    let val = parseInt(e.currentTarget.textContent)
 
     handleChange1d(pieces, setPieces, col, val)
-    setMsg(`pieces[${col}] = ${val}`)
-    console.log(`[UPDATE] pieces[${col}] = ${val}`);
+    setMsg(`pieces_min[${col}] = ${val}`)
+    console.log(`[UPDATE] pieces_min[${col}] = ${val}`);
+  }
+
+  
+  const handlePiecesMaxEdit = (e,col) => {
+    let val = parseInt(e.currentTarget.textContent) 
+    handleChange1d(piecesMax, setPiecesMax, col, val)
+    setMsg(`pieces_max[${col}] = ${val}`)
+    console.log(`[UPDATE] pieces_max[${col}] = ${val}`);
   }
 
   const loadData = (e) => {
@@ -72,8 +79,9 @@ const DynamicTable = (props) => {
     myHeaders.append("Content-Type", "text/plain"); 
     var raw = JSON.stringify({
       "values": data,
-      "constraints": constraints,
-      "pieces": pieces,
+      "constraints": constraints, // TODO: change to "Limits"
+      "pieces_min": pieces,
+      "pieces_max": piecesMax,
       "gains": gains
     });
 
@@ -89,14 +97,14 @@ const DynamicTable = (props) => {
     }
     
     const handleError = (error) => {
-      setMsg(error)
       console.log('[ERROR]', error)
+      setMsg(`[ERROR] ${error}`)
     }
 
-    await fetch("http://127.0.0.1:8000/api/distribution/", requestOptions)
+    await fetch("http://127.0.0.1:8000/api/distribution2/", requestOptions)
       .then(response => response.text())
       .then(result =>  handleResult(result)) // console.log('[RESULT] ', result))
-      .catch(error => handleError(error)); 
+      .catch(error =>  handleError(error)) 
   }
 
   return (
@@ -107,7 +115,7 @@ const DynamicTable = (props) => {
           {_.range(cols).map((col) => (
             <th scope="col">P{col}</th>
           ))}
-          <th scope="col">Constraints</th>
+          <th scope="col">Limit(h)</th>
           <tbody>
           {_.range(rows).map((row) => (
             <tr>
@@ -134,7 +142,7 @@ const DynamicTable = (props) => {
               ))}
           </tr>
           <tr>
-            <th scope="row">Piece(s)</th>
+            <th scope="row">Pieces:min</th>
             {_.range(cols).map((col) => (
                 <td contentEditable
                   onInput={(e) => handlePiecesEdit(e,col) }
@@ -142,6 +150,18 @@ const DynamicTable = (props) => {
                 </td>
               ))}
           </tr>
+
+          <tr>
+            <th scope="row">Pieces:max</th>
+            {_.range(cols).map((col) => (
+                <td contentEditable
+                  onInput={(e) => handlePiecesMaxEdit(e,col) }
+                  suppressContentEditableWarning={true}>
+                </td>
+              ))}
+          </tr>
+          
+          
           </tbody>
         </table>
       </center>
