@@ -12,14 +12,14 @@ const DynamicTable = (props) => {
     Array.from({length: rows},()=> Array.from({length: cols}, () => null))
   );
 
-  const [gains, setGains] = useState(Array.from({length: cols}), () => null)
+  const [gains, setGains] = useState(Float32Array.from({length: cols}), () => null)
   const [pieces, setPieces] = useState(Array.from({length: cols}), () => null)
   const [piecesMax, setPiecesMax] = useState(Array.from({length: cols}), () => null)
   const [constraints, setConstraints] = useState(Array.from({length: rows}), () => null)
 
   const handleChange2d = (arr, setter, row, column, value) => {
     let copy = [...arr];
-    copy[row][column] = +value;
+    copy[row][column] = value;
     setter(copy);
     console.log(`[UPDATE ARRAY] ${copy}`);
   };
@@ -31,7 +31,7 @@ const DynamicTable = (props) => {
   };
 
   const handleDataEdit = (e,row,col) => {
-    let val = parseInt(e.currentTarget.textContent) 
+    let val = parseFloat(e.currentTarget.textContent) 
     setMsg(`data[${row}][${col}] = ${val}`)
     handleChange2d(data, setData, row, col, val)
     console.log(`[UPDATE] data[${row}][${col}] = ${val}`);
@@ -101,7 +101,7 @@ const DynamicTable = (props) => {
       setMsg(`[ERROR] ${error}`)
     }
 
-    await fetch("http://127.0.0.1:8000/api/distribution2/", requestOptions)
+    await fetch("http://127.0.0.1:8000/api/distribution/", requestOptions)
       .then(response => response.text())
       .then(result =>  handleResult(result)) // console.log('[RESULT] ', result))
       .catch(error =>  handleError(error)) 
