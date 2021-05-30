@@ -7,8 +7,8 @@ authors = [
 ]
 dependencies = [
     "fastapi~=0.65",
-    "scipy~=1.6",
     "uvicorn~=0.13",
+    "pulp~=2.4",
 ]
 requires-python = ">=3.8"
 dynamic = ["classifiers"]
