@@ -15,10 +15,10 @@ const DistributionSolver = () => {
     setSolverTable(returnedElem);
   };
 
-  const prepDebugTable = (event) => {
-    event.preventDefault();
-    setSolverTable(<div>{rowsInputRef.current.value} x {colsInputRef.current.value}</div>); 
-  };
+  // const prepDebugTable = (event) => {
+  //   event.preventDefault();
+  //   setSolverTable(<div>{rowsInputRef.current.value} x {colsInputRef.current.value}</div>); 
+  // };
 
   return (
     <div className={styles["distributionsolver"]}>

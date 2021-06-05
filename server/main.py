@@ -93,15 +93,6 @@ def compute_result_pulp(distribution_data: distribution_data):
     result['optimized'] = f"{model.objective.value()}"
     return result
 
-
-
-
-
-
-
-
-
-
 # def compute_result_pulp2(distribution_data):
 #     model = LpProblem(name="resource-allocation", sense=LpMaximize)
 #     # products_len = len(distribution_data.gains) # number of products

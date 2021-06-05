@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState} from "react";
 import styles from "./DynamicTable.module.css";
 import _ from "lodash";
 
 const DynamicTable = (props) => {
+  const rowsLabel = props.rowsLabel
+  const colsLabel = props.colsLabel
   const rows = props.rows;
   const cols = props.cols;
   const [msg, setMsg] = useState("...");
-  const [data, setData] = useState([rows][cols]);
+  // const [data, setData] = useState([rows][cols]);
 
   const handleEdit = (e,row,col) => {
     let html = parseInt(e.currentTarget.textContent) 
@@ -14,9 +16,9 @@ const DynamicTable = (props) => {
     console.log(`html: ${html}, ${row} x ${col}`);
   }
 
-  const loadData = (e) => {
-    setMsg(`Data loaded: ${data}`);
-  };
+  // const loadData = (e) => {
+  //   setMsg(`Data loaded: ${data}`);
+  // };
 
   return (
     <div className={styles["dynamic-table-div"]}>
@@ -24,12 +26,12 @@ const DynamicTable = (props) => {
         <table className={styles["dynamic-table"]}>
           <th scope="col"></th>
           {_.range(cols).map((col) => (
-            <th scope="col">M{col}</th>
+            <th scope="col">{rowsLabel}{col}</th>
           ))}
           <tbody>
           {_.range(rows).map((row) => (
             <tr>
-              <td><span className={styles['row-header']}>P{row}</span></td>
+              <td><span className={styles['row-header']}>{props.colsLabel}{row}</span></td>
               {_.range(cols).map((col) => (
                 <td contentEditable
                   onInput={(e) => handleEdit(e, row,col) }

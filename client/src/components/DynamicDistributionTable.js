@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styles from "./DynamicTable.module.css";
-import _, { thru } from "lodash";
+import _ from "lodash";
 
 const DynamicTable = (props) => {
   const rows = props.rows;
@@ -69,9 +69,9 @@ const DynamicTable = (props) => {
     console.log(`[UPDATE] pieces_max[${col}] = ${val}`);
   }
 
-  const loadData = (e) => {
-    setMsg(`Data loaded: ${data}`);
-  };
+  // const loadData = (e) => {
+  //   setMsg(`Data loaded: ${data}`);
+  // };
 
   const sendComputationDataToServer = async () => {
     setMsg("Data sent to the server. Processing...")
