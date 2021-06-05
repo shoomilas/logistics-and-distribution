@@ -10,7 +10,6 @@ const MiddlemanSolver = () => {
   const [solverInput, setSolverInput] = useState(<div></div>);
   const [outcomeComponent, setOutcomeComponent] = useState(<div></div>);
   const [singleCostArray, setSingleCostArray] = useState();
-  // const [suppliersArray, setSuppliersArray] = useState([])
 
   let nRows = 4;
   let nCols = 4;
@@ -19,14 +18,8 @@ const MiddlemanSolver = () => {
   console.log("[MiddlemanSolver.js: SingleCostsTable]");
   console.log(singleCostArray);
 
-  let inputData = {
-    singleCosts: [[]],
-    supply: [],
-    costs: [],
-    demand: [],
-    prices: [],
-  };
-
+    let inputData
+  
   const prepOutcome = (event) => {
     const returnedElem = () => (
       <div>
@@ -39,16 +32,22 @@ const MiddlemanSolver = () => {
 
   const prepInputForms = (event) => {
     event.preventDefault();
+    let suppliers = +rowsInputRef.current.value
+    let buyers = +colsInputRef.current.value
+    
+    inputData = {
+        singleCosts: (Array(suppliers).fill(0).map(() => Array(buyers).fill(0.0))),
+        supply: (new Array(suppliers)).fill(0),
+        costs: (new Array(suppliers)).fill(0),
+        demand: (new Array(buyers)).fill(0),
+        prices: (new Array(buyers)).fill(0),
+      };
+    console.log(`SINGLE COSTS: ${inputData.singleCosts}`);
+
     const refreshSingleCosts = (outputData) => {
       inputData.singleCosts = outputData;
       setSingleCostArray(outputData);
     };
-
-    setSingleCostArray(
-      Array.from({ length: rowsInputRef.current.value }, () =>
-        Array.from({ length: colsInputRef.current.value }, () => 0)
-      )
-    );
 
     const handleFormInput = (e, arrayToUpdate, index, arrayName='foo') => {
       arrayToUpdate[index] = +e.currentTarget.value;
