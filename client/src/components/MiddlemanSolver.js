@@ -9,8 +9,8 @@ const MiddlemanSolver = () => {
     const colsInputRef = useRef();
     const [solverInput, setSolverInput] = useState(<div></div>);    
     const [outcomeComponent, setOutcomeComponent] = useState(<div></div>);    
-    
     const [dataArray, setDataArray] = useState()
+    
     let nRows = 4
     let nCols = 4
     let nProfitAtTheEnd, nExpense
@@ -18,9 +18,10 @@ const MiddlemanSolver = () => {
     console.log("[MiddlemanSolver.js: SingleCostsTable]");
     console.log(dataArray);
 
-    const prepOutcome = (event, dataArr) => {
+    const prepOutcome = (event) => {
+        // TODO: Why is it not able to access dateArray from inside of this function????
         console.log("[SOLVE CLICKED] DATA ARRAY:"); 
-        console.log(dataArr);
+        console.log(dataArray);
         const returnedElem = () => (<div>
             {/* <h3>{dataArray[0][0]}</h3> */}
             <h2>Y</h2>
@@ -43,6 +44,7 @@ const MiddlemanSolver = () => {
                     <label>Cost:</label><input     type="number" name="rows" defaultValue="3" min="1" max ="40"/>
                 </form>
             </div>)}</>)
+        
         const BuyersInput = () => (<>{_.range(0,colsInputRef.current.value).map((x) => <div>
             <form>
                 <p><b>Buyer #{x}</b></p>
@@ -61,7 +63,7 @@ const MiddlemanSolver = () => {
                 <DynamicTable handleDataEdit={refreshSingleCosts} rows={rowsInputRef.current.value} cols={colsInputRef.current.value} rowsLabel="O" colsLabel="D" defaultValue={0}/>
                 <div className={styles.buttons}>
                     {/* <button onClick={prepOutcome}>Solve</button> */}
-                    <button onClick={(e) => prepOutcome(e, dataArray)}>Solve</button>
+                    <button onClick={prepOutcome}>Solve</button>
                 </div>
             </>
         );
