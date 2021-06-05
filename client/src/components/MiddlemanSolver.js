@@ -8,37 +8,68 @@ const MiddlemanSolver = () => {
     const rowsInputRef = useRef();
     const colsInputRef = useRef();
     const [solverInput, setSolverInput] = useState(<div></div>);    
-    let nRows = 4;
-    let nCols = 4;
-    let nProfitAtTheEnd, nExpense;
+    const [outcomeComponent, setOutcomeComponent] = useState(<div></div>);    
+
+    let nRows = 4
+    let nCols = 4
+    let nProfitAtTheEnd, nExpense
+
     let inData = initializeData(nRows,nCols)
+    console.log(inData);
+
+    const prepOutcome = (event) => {
+        console.log("yo");
+        const returnedElem = () => (<div>
+            <h3>LOOOL</h3>
+        </div>)
+        setOutcomeComponent(returnedElem)
+    }
 
     const prepInputForms = (event) => {
         event.preventDefault(); 
-        const BuyersInput = () => (<>I</>)
+        const SuppliersInput = () => (<>{_.range(0,rowsInputRef.current.value).map((x) => <div>
+                <form>
+                    <p><b>Supplier #{x}</b></p>
+                    <label>Supply:</label><input   type="number" name="rows" defaultValue="3" min="1" max ="40"/>
+                    <label>Cost:</label><input  type="number" name="rows" defaultValue="3" min="1" max ="40"/>
+                </form>
+            </div>)}</>)
+        const BuyersInput = () => (<>{_.range(0,colsInputRef.current.value).map((x) => <div>
+            <form>
+                <p><b>Buyer #{x}</b></p>
+                <label>Demand:</label><input   type="number" name="rows" defaultValue="3" min="1" max ="40"/>
+                <label>Price:</label><input  type="number" name="rows" defaultValue="3" min="1" max ="40"/>
+            </form>
+        </div>)}</>)
 
         const returnedElem = () =>(
             <>
-                <BuyersInput/>
+                <div style={{display: "flex"}}>
+                <div style={{flex: "50%"}}><SuppliersInput/></div>
+                <div style={{flex: "50%"}}><BuyersInput/></div>
+                </div>
                 <h1>Single cost input</h1>
                 <DynamicTable rows={rowsInputRef.current.value} cols={colsInputRef.current.value} rowsLabel="O" colsLabel="D"/>
+                <div className={styles.buttons}>
+                    <button onClick={prepOutcome}>Solve</button>
+                </div>
             </>
         );
         setSolverInput(returnedElem);
       };
 
-    console.log(inData);
+    
 
     return (
         <div className={styles["distributionsolver"]}>
-        <h1>Optimal distribution problem</h1>      
+        <h1>Middleman problem solver</h1>      
         <p>Please input the suppliers/buyers config data</p>
         <fieldset>
             <form>
             <legend>Input Config</legend>
-            <label>Buyers:</label>
-            <input ref={rowsInputRef} type="number" name="rows" defaultValue="3" min="1" max ="40"/>
             <label>Suppliers:</label>
+            <input ref={rowsInputRef} type="number" name="rows" defaultValue="3" min="1" max ="40"/>
+            <label>Buyers:</label>
             <input ref={colsInputRef} type="number" name="cols" defaultValue="3" min="1" max="16"/>
             </form>
         </fieldset>
@@ -48,6 +79,7 @@ const MiddlemanSolver = () => {
         <hr />
         {solverInput}
         <hr/>
+        {outcomeComponent}
         </div>
     )
 }
