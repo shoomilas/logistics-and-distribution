@@ -3,7 +3,7 @@ import _ from "lodash";
 
 export const initializeData = (nRows, nCols) => { 
 // const initializeData = (nRows, nCols) => {
-    console.log("initializeData()");
+    // console.log("initializeData()");
     let nDemandSum = 0;
     let nSupplySum = 0;
     let i, j, k, l;

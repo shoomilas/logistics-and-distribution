@@ -3,22 +3,32 @@ import styles from "./DynamicTable.module.css";
 import _ from "lodash";
 
 const DynamicTable = (props) => {
+  
   const rowsLabel = props.rowsLabel
   const colsLabel = props.colsLabel
+  const defaultValue = (props.defaultValue == undefined) ? null : props.defaultValue
   const rows = props.rows;
   const cols = props.cols;
   const [msg, setMsg] = useState("...");
-  // const [data, setData] = useState([rows][cols]);
+  const [data, setData] = useState(
+    Array.from({length: rows},()=> Array.from({length: cols}, () => defaultValue))
+  );
+  
+  const handleChange2d = (arr, setter, row, column, value) => {
+    let copy = [...arr];
+    copy[row][column] = value;
+    setter(copy);
+    console.log(`[UPDATE ARRAY] ${copy}`);
 
-  const handleEdit = (e,row,col) => {
-    let html = parseInt(e.currentTarget.textContent) 
-    setMsg(`data[${row}][${col}] = ${html}`)
-    console.log(`html: ${html}, ${row} x ${col}`);
+    props.handleDataEdit(data)
+  };
+
+  const handleDataEdit = (e,row,col) => {
+    let val = parseFloat(e.currentTarget.textContent) 
+    setMsg(`data[${row}][${col}] = ${val}`)
+    handleChange2d(data, setData, row, col, val)
+    console.log(`[UPDATE] data[${row}][${col}] = ${val}`);
   }
-
-  // const loadData = (e) => {
-  //   setMsg(`Data loaded: ${data}`);
-  // };
 
   return (
     <div className={styles["dynamic-table-div"]}>
@@ -34,7 +44,7 @@ const DynamicTable = (props) => {
               <td><span className={styles['row-header']}>{props.colsLabel}{row}</span></td>
               {_.range(cols).map((col) => (
                 <td contentEditable
-                  onInput={(e) => handleEdit(e, row,col) }
+                  onInput={(e) => handleDataEdit(e, row,col) }
                   suppressContentEditableWarning={true}>
                 </td>
               ))}
