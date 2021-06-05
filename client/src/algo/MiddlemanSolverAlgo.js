@@ -64,22 +64,13 @@ const initializeData = (nRows, nCols, input) => {
 
 const singleProfitsArray = (arr) => {
     let section = arr.slice(1, arr.length+1).map( (x) => x.slice(1, x.length+1))
-    let rows = 3
-    let cols = 3
-
-
+    let rows = section.length - 2 
+    let cols = section[0].length - 2 
     let result = Array.from({length: section.length - 2},()=> Array.from({length: section[0].length - 2}, () => 0))
-    console.log("SECITON HERE");
-    console.log(section);
-    
     _.range(0, rows).map( row => _.range(0, cols).map( (col) => 
-            // result[row][col] = section[row][col]
-            console.log(result[row][col] = section[row][col].profit)
-            // console.log( ` ${row} ${col}`)
+            result[row][col] = section[row][col].profit
         )
     )
-
-    console.log("/SECITON HERE");
     return result
 }
 
