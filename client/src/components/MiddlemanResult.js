@@ -29,18 +29,19 @@ const MiddlemanResult = (props) => {
 
 
     return (
-        <div>
+        <div style={{whiteSpace: 'pre'}}>
             Single Costs [0][0]: {input.singleCosts[0][0]} <br/>
             Single Costs [0][1]: {input.singleCosts[0][1]} <br/>
             Supplier[0]: {input.supply[0]} <br/>
             Supplier[1]: {input.supply[1]} <br/>
-            Result: {outputData.result}<br/>
+            Result: {JSON.stringify(outputData, null, 4)}<br/>
 
             <div>Single Costs:
                 <TableOver2DArray array={outputData.singleProfits}/>
             </div>
 
             <div>Routes:
+                <TableOver2DArrayJson array={outputData.arrOut}/>
                 {/* <TableOver2DArray array={outputData.routes}/> */}
             </div>
 
@@ -50,6 +51,25 @@ const MiddlemanResult = (props) => {
 
 export default MiddlemanResult
 
+
+const TableOver2DArrayJson = (props) => {
+    let arrToDisplay = props.array
+    let rows = arrToDisplay.length   
+    let cols = arrToDisplay[0].length  
+
+    return(
+        <table style={{whiteSpace: 'pre', maxHeight: '100px', fontSize: 'xx-small'}}>
+            {_.range(0,rows).map( (row) => 
+            <tr>
+                {
+                    _.range(0,cols).map( (col)=> <td>{JSON.stringify(arrToDisplay[row][col])}</td>)
+                    
+                }
+            </tr>)}
+        </table>
+    )
+
+}
 
 const TableOver2DArray = (props) => {
     let arrToDisplay = props.array

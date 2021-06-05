@@ -10,6 +10,8 @@ export const calculate = (input) => {
     let arr = initializeData(nRows, nCols, input)
     let singleProfitsResult = singleProfitsArray(arr)
     arr = wyznaczenieInicijalnychWartosciWolumentow(arr, nRows, nCols)
+    arr = uzupelnianieWolumenowNaFakeDostawcachOdbiorcach(arr, nRows, nCols)
+    arr = przetwarzanieIteracjiAlgorystmuOptymalizacyjnego(arr, nRows, nCols)
 
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
     return {result: 252, arrOut: arr, singleProfits: singleProfitsResult}    
@@ -37,6 +39,7 @@ const initializeData = (nRows, nCols, input) => {
     aTab[4][0] = {supply: 0, demand: 0}  // TODO: make this dynamic (nRows instaed of 4?)
     _.range(1, nRows).map((row) => aTab[row][nCols + 1] = {alpha: null})
     _.range(1, nCols).map((col) => aTab[nRows + 1][col] = {beta: null})
+    
     // Alphas/Betas initialize
     _.range(1, nRows).map((row) => nSupplySum += aTab[row][0].supply)
     _.range(1, nCols).map((col) => nDemandSum += aTab[0][col].demand)
@@ -56,7 +59,6 @@ const initializeData = (nRows, nCols, input) => {
     _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
         aTab[row][col].profit = aTab[0][col].profit - aTab[row][col].expense - aTab[row][0].profit;
         aTab[row][col].used = 0;
-        // TODO: Slice, output table
     }))
     console.log(aTab);
     return aTab;
@@ -110,9 +112,7 @@ const wyznaczenieInicijalnychWartosciWolumentow = (aTab, nRows, nCols) => {
     return aTab;
 }
 
-///////////////////////////////////////////////////
-
-const UzupelnianieWolumenowNaFakeDostawcachOdbiorcach = (aTab, nRows, nCols) => {
+const uzupelnianieWolumenowNaFakeDostawcachOdbiorcach = (aTab, nRows, nCols) => {
     _.range(1, nRows).map((row) => {
         aTab[row][nCols].volume = (aTab[row][0].supply > 0) ? aTab[row][0].supply : null;
         aTab[row][0].supply = 0;
@@ -124,12 +124,24 @@ const UzupelnianieWolumenowNaFakeDostawcachOdbiorcach = (aTab, nRows, nCols) => 
     return aTab;
 }
 
-const PrzetwarzanieIteracjiAlgorystmuOptymalizacyjnego = () => {
+///////////////////////////////////////////////////
+
+const pm_AlphaBeta_Calculate = (nProfit, nAlpha, nBeta) => {
+	let nRet = null;
+	if (nAlpha != null && nBeta == null) nRet = nProfit - nAlpha;
+	if (nAlpha == null && nBeta != null) nRet = nProfit - nBeta;
+	return nRet;
+}
+
+
+//////////////////////////////////////////////////
+
+const przetwarzanieIteracjiAlgorystmuOptymalizacyjnego = (arr, nRows, nCols) => {
     let nIteration = 0;
     let nStop = 0;
     while (nStop == 0) {
         nIteration++;
-        let nRet = pm_Iteration_Calculate(nIteration);
+        let nRet = pm_Iteration_Calculate(arr, nRows, nCols, nIteration);
         if (nRet > 0) {
         } else {
             if (nRet = -1) {
@@ -145,132 +157,143 @@ const PrzetwarzanieIteracjiAlgorystmuOptymalizacyjnego = () => {
             nStop = 1;
         }
     }
-    // return result;
+    return arr
 }
 
-const pm_Iteration_Calculate = (nIteration) => {
-    return []
+const pm_Iteration_Calculate = (aTab, nRows, nCols, nIteration) => {
+    let nRet = null
+    aTab = wyzerowanieAlfaBeta(aTab, nRows, nCols)
+    aTab = wyznaczenieAlfaBetadlaRowTab(aTab, nRows, nCols)
+    aTab = zeroDeltaPrevIt(aTab, nRows, nCols)
+    aTab = wyznaczenieDeltaCurIt(aTab, nRows,nCols)
+    return nRet
 }
 
-// const WyzerowanieAlfaBeta = (arr, nRows, nCols) => {
-//     _.range(1, nRows).map((row) => {
-//             aTab[row][nCols + 1].alpha = null;
-//         }
-//     )
-//     _.range(1, nCols).map((col) => {
-//             aTab[nRows + 1][col].beta = null;
-//         }
-//     )
-// }
-// const WyznaczenieAlfaBetadlaRowTab = (arr, nRows, nCols) => {
-//     aTab[1][nCols + 1].alpha = 0;
-//     nStop = 0;
-//     while (nStop == 0) {
-//         nStop = 1;
-//         _.range(1, nRows).map((row) => _.range(1, nCols).map((cols) => {
-//                 nAlpha = aTab[i][nCols + 1].alpha;
-//                 nBeta = aTab[nRows + 1][j].beta;
-//                 nProfit = aTab[i][j].profit;
-//                 if ((nAlpha == null || nBeta == null) && aTab[i][j].volume != null) {
-//                     nStop = 0;
-//                     if (nAlpha == null) {
-//                         aTab[i][nCols + 1].alpha = pm_AlphaBeta_Calculate(nProfit, nAlpha, nBeta);
-//                     } else {
-//                         aTab[nRows + 1][j].beta = pm_AlphaBeta_Calculate(nProfit, nAlpha, nBeta);
-//                     }
-//                 }
-//             }
-//         ))
-//     }
-// }
-// const ZeroDeltaPrevIt = (arr, nRows, nCols) => {
-//     _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
-//             aTab[row][col].delta = null;
-//             aTab[row][col].deltaSign = null;
-//         }
-//     ))
-// }
+const wyzerowanieAlfaBeta = (aTab, nRows, nCols) => {
+    _.range(1, nRows).map((row) => {
+            aTab[row][nCols + 1].alpha = null;
+        }
+    )
+    _.range(1, nCols).map((col) => {
+            aTab[nRows + 1][col].beta = null;
+        }
+    )
+}
+const wyznaczenieAlfaBetadlaRowTab = (aTab, nRows, nCols) => {
+    aTab[1][nCols + 1].alpha = 0;
+    let nStop = 0;
+    while (nStop == 0) {
+        nStop = 1;
+        _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+                let nAlpha = aTab[col][nCols + 1].alpha;
+                let nBeta = aTab[nRows + 1][col].beta;
+                let nProfit = aTab[row][col].profit;
+                if ((nAlpha == null || nBeta == null) && aTab[row][col].volume != null) {
+                    nStop = 0;
+                    if (nAlpha == null) {
+                        aTab[row][nCols + 1].alpha = pm_AlphaBeta_Calculate(nProfit, nAlpha, nBeta);
+                    } else {
+                        aTab[nRows + 1][col].beta = pm_AlphaBeta_Calculate(nProfit, nAlpha, nBeta);
+                    }
+                }
+            }
+        ))
+    }
+}
+const zeroDeltaPrevIt = (aTab, nRows, nCols) => {
+    _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+            aTab[row][col].delta = null;
+            aTab[row][col].deltaSign = null;
+        }
+    ))
+}
 
-// const WyznaczenieDeltaCurIt = (arr, nRows, nCols) => {
-//     _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
-//             if (aTab[row][col].volume == null) {
-//                 aTab[row][col].delta = aTab[row][col].profit - aTab[row][nCols + 1].alpha - aTab[nRows + 1][col].beta;
-//             }
-//         }
-//     ))
-// }
-// const WyznaczenieSciezkiDelta = (arr, nRows, nCols) => {
-//     nRowMax = 0;
-//     nColMax = 0;
-//     nMaxValue = -999999;
+const wyznaczenieDeltaCurIt = (aTab, nRows, nCols) => {
+    _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+            if (aTab[row][col].volume == null) {
+                aTab[row][col].delta = aTab[row][col].profit - aTab[row][nCols + 1].alpha - aTab[nRows + 1][col].beta;
+            }
+        }
+    ))
+}
+const WyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
+    let nRowMax = 0;
+    let nColMax = 0;
+    let nMaxValue = -999999;
+    let nRet = null
 
-//     _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
-//             nStop = 0;
-//             if (aTab[row][col].delta > nMaxValue) {
-//                 nRowMax = row;
-//                 nColMax = col;
-//                 nMaxValue = aTab[row][col].delta;
-//             }
-//         }))
+    _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+        let nStop = 0;
+        if (aTab[row][col].delta > nMaxValue) {
+            nRowMax = row;
+            nColMax = col;
+            nMaxValue = aTab[row][col].delta;
+        }
+    }))
 
-//     if (nMaxValue > 0) {
-//         nRowSel = 0;
-//         nColSel = 0;
-//         nStop = 0;
-//        _.range(1,nRows).map((row) => {
-//            if (nStop == 0) {
-//                if (i != nRowMax) {
-//                    if (aTab[row][nColMax].delta == null) {
-//                        nRowSel = row;
-//                    }
-//                }
-//                if (nRowSel > 0) {
-//                    _.range(1, nCols).map((col) => {
-//                        if (aTab[nRowMax][col].delta == null && aTab[nRowSel][col].delta == null) {
-//                            nColSel = col;
-//                            nStop = 1;
-//                        }
-//                    })
-//                }
-//            }
-//        })
+    if (nMaxValue > 0) {
+        let nRowSel = 0;
+        let nColSel = 0;
+        let nStop = 0;
+       _.range(1,nRows).map((row) => {
+           if (nStop == 0) {
+               if (row != nRowMax) {
+                   if (aTab[row][nColMax].delta == null) {
+                       nRowSel = row;
+                   }
+               }
+               if (nRowSel > 0) {
+                   _.range(1, nCols).map((col) => {
+                       if (aTab[nRowMax][col].delta == null && aTab[nRowSel][col].delta == null) {
+                           nColSel = col;
+                           nStop = 1;
+                       }
+                   })
+               }
+           }
+       })
 
-//         if ((nRowSel * nColSel) != 0) {
-//             // Wyznaczenie +1/-1 dla delt
-//             aTab[nRowMax][nColMax].deltaSign = 1;
-//             aTab[nRowSel][nColSel].deltaSign = 1;
-//             aTab[nRowSel][nColMax].deltaSign = -1;
-//             aTab[nRowMax][nColSel].deltaSign = -1;
+        if ((nRowSel * nColSel) != 0) {
+            // Wyznaczenie +1/-1 dla delt
+            aTab[nRowMax][nColMax].deltaSign = 1;
+            aTab[nRowSel][nColSel].deltaSign = 1;
+            aTab[nRowSel][nColMax].deltaSign = -1;
+            aTab[nRowMax][nColSel].deltaSign = -1;
 
-//             if (aTab[nRowSel][nColMax].volume <= aTab[nRowMax][nColSel].volume) {
-//                 nVolumeChange = aTab[nRowSel][nColMax].volume;
-//             } else {
-//                 nVolumeChange = aTab[nRowMax][nColSel].volume;
-//             }
 
-//             _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
-//                     if (aTab[row][col].deltaSign != null) {
-//                         aTab[row][col].volume += aTab[row][col].deltaSign * nVolumeChange;
-//                         if (aTab[row][col].volume == 0) {
-//                             aTab[row][col].volume = null;
-//                         }
-//                     }
-//             }))
-//             //	pm_DrawTable_Delta(nIteration, 1, nRowMax, nColMax, nRowSel, nColSel);
-//             nRet = 1;
-//         } else {
-//             nRet = null;
-//         }
-//     } else {
-//         // Wypisanie do tabeli 'trasy'
-//         _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
-//                 if (aTab[row][col].volume == null) {
-//                     document.getElementById("wD" + row + "O" + col).innerHTML = 'x';
-//                 }
-//                 else {
-//                     document.getElementById("wD" + row + "O" + col).innerHTML = aTab[row][col].volume;
-//                 }
-//             }))
-//         }
+            let nVolumeChange
+            if (aTab[nRowSel][nColMax].volume <= aTab[nRowMax][nColSel].volume) {
+                nVolumeChange = aTab[nRowSel][nColMax].volume;
+            } else {
+                nVolumeChange = aTab[nRowMax][nColSel].volume;
+            }
 
-// }
+            _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+                    if (aTab[row][col].deltaSign != null) {
+                        aTab[row][col].volume += aTab[row][col].deltaSign * nVolumeChange;
+                        if (aTab[row][col].volume == 0) {
+                            aTab[row][col].volume = null;
+                        }
+                    }
+            }))
+            	// pm_DrawTable_Delta(nIteration, 1, nRowMax, nColMax, nRowSel, nColSel);
+            nRet = 1;
+        } else {
+            nRet = null;
+        }
+    } else {
+        // Wypisanie do tabeli 'trasy'
+        _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+                if (aTab[row][col].volume == null) {
+                    // document.getElementById("wD" + row + "O" + col).innerHTML = 'x';
+                    console.log("Sth sth wD row O col");
+                }
+                else {
+                    // document.getElementById("wD" + row + "O" + col).innerHTML = aTab[row][col].volume;
+                    console.log("Sth sth wD row O col");
+                }
+            }))
+        }
+    
+    return aTab;
+}
