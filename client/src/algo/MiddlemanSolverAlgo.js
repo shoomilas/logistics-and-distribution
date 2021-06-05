@@ -8,7 +8,6 @@ export const calculate = (input) => {
     let nCols = 4;
     let nProfitAtTheEnd, nExpense;
     let arr = initializeData(nRows, nCols, input)
-    // arr = handleInput(arr, nCols, nRows, input)
 
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
     return {result: 252, arrOut: arr}    
@@ -30,10 +29,10 @@ const initializeData = (nRows, nCols, input) => {
         [{}, {}, {}, {}, {}, {}],
         [{}, {}, {}, {}, {}, {}]
     ];
-
-    _.range(1, nCols).map((col) => aTab[0][col] = {demand: 0, profit: 0}) // TODO: Buyers info input handling
-    _.range(1, nRows).map((row) => aTab[row][0] = {supply: 0, profit: 0}) // TODO: Suppliers info input handling
-    aTab[4][0] = {supply: 0, demand: 0}  // TODO: make this dynamic
+    
+    _.range(1, nCols).map((col) => aTab[0][col] = {demand: 0, profit: 0})
+    _.range(1, nRows).map((row) => aTab[row][0] = {supply: 0, profit: 0})
+    aTab[4][0] = {supply: 0, demand: 0}  // TODO: make this dynamic (nRows instaed of 4?)
     _.range(1, nRows).map((row) => aTab[row][nCols + 1] = {alpha: null})
     _.range(1, nCols).map((col) => aTab[nRows + 1][col] = {beta: null})
     // Alphas/Betas initialize
@@ -44,30 +43,22 @@ const initializeData = (nRows, nCols, input) => {
         aTab[0][nCols] = {demand: nSupplySum, profit: 0}
     }
 
+    // Handle input
     _.range(1,nCols).map( (col) => aTab[0][col] = { demand: input.demand[col-1], profit: input.prices[col-1]} )
     _.range(1,nRows).map( (row) => aTab[row][0] = { supply: input.supply[row-1], profit: input.costs[row-1]} )
     _.range(1,nRows).map((row) => _.range(1,nCols).map((col) => { 
         aTab[row][col].expense = input.singleCosts[row-1][col-1]
     }))
 
+    // Calculate single profits
     _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
         aTab[row][col].profit = aTab[0][col].profit - aTab[row][col].expense - aTab[row][0].profit;
         aTab[row][col].used = 0;
-        // TODO: (OUTPUT DATA) Handle single profits
+        // TODO: Slice, output table
     }))
     console.log(aTab);
     return aTab;
 }
-
-// const handleInput = (arr, nCols,nRows, input) => {
-//     _.range(1,nCols).map( (col) => arr[0][col] = { demand: input.demand[col-1], profit: input.costs[col-1]} )
-//     _.range(1,nRows).map( (row) => arr[row][0] = { supply: input.supply[row-1], profit: input.prices[row-1]} )
-//     _.range(1,nRows).map((row) => _.range(1,nCols).map((col) => { 
-//         arr[row][col].expense = input.singleCosts[row-1][col-1]
-//     }))
-
-//     return(arr)
-// }
 
 // const wyznaczenieInicijalnychWartosciWolumentow = (arr, nRows, nCols) => {
 //     nStop = 0;
@@ -263,8 +254,3 @@ const initializeData = (nRows, nCols, input) => {
 //         }
 
 // }
-
-// let nRows = 4;
-// let nCols = 4;
-// let nProfitAtTheEnd, nExpense;
-// let arr = initializeData(nRows, nCols)
