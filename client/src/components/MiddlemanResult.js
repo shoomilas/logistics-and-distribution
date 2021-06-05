@@ -37,7 +37,7 @@ const MiddlemanResult = (props) => {
             Result: {outputData.result}<br/>
 
             <div>Single Costs:
-                {/* <TableOver2DArray array={outputData.singleProfits}/> */}
+                <TableOver2DArray array={outputData.singleProfits}/>
             </div>
 
             <div>Routes:
@@ -53,8 +53,8 @@ export default MiddlemanResult
 
 const TableOver2DArray = (props) => {
     let arrToDisplay = props.array
-    let rows = arrToDisplay.length
-    let cols = arrToDisplay[0].length
+    let rows = arrToDisplay.length   
+    let cols = arrToDisplay[0].length  
 
     return(
         <table className={styles["dynamic-table"]}>

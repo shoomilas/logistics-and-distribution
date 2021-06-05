@@ -8,9 +8,11 @@ export const calculate = (input) => {
     let nCols = 4;
     let nProfitAtTheEnd, nExpense;
     let arr = initializeData(nRows, nCols, input)
+    let singleProfitsResult = singleProfitsArray(arr)
+    arr = wyznaczenieInicijalnychWartosciWolumentow(arr, nRows, nCols)
 
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
-    return {result: 252, arrOut: arr}    
+    return {result: 252, arrOut: arr, singleProfits: singleProfitsResult}    
 }
 
 const initializeData = (nRows, nCols, input) => { 
@@ -60,77 +62,104 @@ const initializeData = (nRows, nCols, input) => {
     return aTab;
 }
 
-// const wyznaczenieInicijalnychWartosciWolumentow = (arr, nRows, nCols) => {
-//     nStop = 0;
-//     while (nStop == 0) {
-//         nRowMax = 0;
-//         nColMax = 0;
-//         nMaxValue = -999999;
+const singleProfitsArray = (arr) => {
+    let section = arr.slice(1, arr.length+1).map( (x) => x.slice(1, x.length+1))
+    let rows = 3
+    let cols = 3
 
-//         nStop = 1;
-//         _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
-//             if (aTab[row][col].used === 0) {
-//                 nStop = 0;
-//                 if (aTab[row][col].profit > nMaxValue) {
-//                     nRowMax = row;
-//                     nColMax = col;
-//                     nMaxValue = aTab[row][col].profit;
-//                 }
-//             }
-//         }))
-//         if (nStop == 0) {
-//             if (aTab[0][nColMax].demand >= aTab[nRowMax][0].supply) {
-//                 aTab[nRowMax][nColMax].volume = aTab[nRowMax][0].supply;
-//                 aTab[0][nColMax].demand -= aTab[nRowMax][0].supply;
-//                 aTab[nRowMax][0].supply = 0;
-//                 _.range(1, nCols).map((cols) => aTab[nRowMax][cols].used = 1)
-//             } else {
-//                 aTab[nRowMax][nColMax].volume = aTab[0][nColMax].demand;
-//                 aTab[nRowMax][0].supply -= aTab[0][nColMax].demand;
-//                 aTab[0][nColMax].demand = 0;
-//                 _.range(1, nRows).map((rows) => aTab[rows][nColMax].used = 1)
-//                 for (i = 1; i <= nRows; i++) aTab[i][nColMax].used = 1;
-//             }
-//         }
-//     }
-//     return aTab;
-// }
 
-// const UzupelnianieWolumenowNaFakeDostawcachOdbiorcach = (arr, nRows, nCols) => {
-//     _.range(1, nRows).map((row) => {
-//         aTab[row][nCols].volume = (aTab[row][0].supply > 0) ? aTab[row][0].supply : null;
-//         aTab[row][0].supply = 0;
-//     })
-//     _.range(1, nCols).map((cols) => {
-//         aTab [nRows][cols].volume = (aTab[0][cols].demand > 0) ? aTab [0][cols].demand : null;
-//         aTab[0][cols].demand = 0;
-//     })
-//     return aTab;
-// }
+    let result = Array.from({length: section.length - 2},()=> Array.from({length: section[0].length - 2}, () => 0))
+    console.log("SECITON HERE");
+    console.log(section);
+    
+    _.range(0, rows).map( row => _.range(0, cols).map( (col) => 
+            // result[row][col] = section[row][col]
+            console.log(result[row][col] = section[row][col].profit)
+            // console.log( ` ${row} ${col}`)
+        )
+    )
 
-// const PrzetwarzanieIteracjiAlgorystmuOptymalizacyjnego = () => {
-//     let nIteration = 0;
-//     let nStop = 0;
-//     while (nStop == 0) {
-//         nIteration++;
-//         nRet = pm_Iteration_Calculate(nIteration);
-//         if (nRet > 0) {
-//         } else {
-//             if (nRet = -1) {
-//                 console.log("Znaleziono rozwiązanie optymalne.");
-//                 nStop = 1;
-//             } else {
-//                 console.log("Nieokreślone rozwiązanie")
-//                 nStop = 1;
-//             }
-//         }
-//         if (nIteration > 20) {
-//             console.log("Przerwano po 20 iteracjach")
-//             nStop = 1;
-//         }
-//     }
-//     return result;
-// }
+    console.log("/SECITON HERE");
+    return result
+}
+
+const wyznaczenieInicijalnychWartosciWolumentow = (aTab, nRows, nCols) => {
+    let nStop = 0;
+    while (nStop == 0) {
+        let nRowMax = 0;
+        let nColMax = 0;
+        let nMaxValue = -999999;
+
+        nStop = 1;
+        _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+            if (aTab[row][col].used === 0) {
+                nStop = 0;
+                if (aTab[row][col].profit > nMaxValue) {
+                    nRowMax = row;
+                    nColMax = col;
+                    nMaxValue = aTab[row][col].profit;
+                }
+            }
+        }))
+        if (nStop == 0) {
+            if (aTab[0][nColMax].demand >= aTab[nRowMax][0].supply) {
+                aTab[nRowMax][nColMax].volume = aTab[nRowMax][0].supply;
+                aTab[0][nColMax].demand -= aTab[nRowMax][0].supply;
+                aTab[nRowMax][0].supply = 0;
+                _.range(1, nCols).map((cols) => aTab[nRowMax][cols].used = 1)
+            } else {
+                aTab[nRowMax][nColMax].volume = aTab[0][nColMax].demand;
+                aTab[nRowMax][0].supply -= aTab[0][nColMax].demand;
+                aTab[0][nColMax].demand = 0;
+                _.range(1, nRows).map((rows) => aTab[rows][nColMax].used = 1)
+                _.range(1, nRows).map( (row) => aTab[row][nColMax].used = 1)
+            }
+        }
+    }
+    return aTab;
+}
+
+///////////////////////////////////////////////////
+
+const UzupelnianieWolumenowNaFakeDostawcachOdbiorcach = (aTab, nRows, nCols) => {
+    _.range(1, nRows).map((row) => {
+        aTab[row][nCols].volume = (aTab[row][0].supply > 0) ? aTab[row][0].supply : null;
+        aTab[row][0].supply = 0;
+    })
+    _.range(1, nCols).map((cols) => {
+        aTab [nRows][cols].volume = (aTab[0][cols].demand > 0) ? aTab [0][cols].demand : null;
+        aTab[0][cols].demand = 0;
+    })
+    return aTab;
+}
+
+const PrzetwarzanieIteracjiAlgorystmuOptymalizacyjnego = () => {
+    let nIteration = 0;
+    let nStop = 0;
+    while (nStop == 0) {
+        nIteration++;
+        let nRet = pm_Iteration_Calculate(nIteration);
+        if (nRet > 0) {
+        } else {
+            if (nRet = -1) {
+                console.log("Znaleziono rozwiązanie optymalne.");
+                nStop = 1;
+            } else {
+                console.log("Nieokreślone rozwiązanie")
+                nStop = 1;
+            }
+        }
+        if (nIteration > 20) {
+            console.log("Przerwano po 20 iteracjach")
+            nStop = 1;
+        }
+    }
+    // return result;
+}
+
+const pm_Iteration_Calculate = (nIteration) => {
+    return []
+}
 
 // const WyzerowanieAlfaBeta = (arr, nRows, nCols) => {
 //     _.range(1, nRows).map((row) => {
