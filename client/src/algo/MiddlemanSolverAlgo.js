@@ -12,7 +12,13 @@ export const calculate = (input) => {
     arr = przetwarzanieIteracjiAlgorystmuOptymalizacyjnego(arr, nRows, nCols)
     let {nEndProfit, nEndExpense, nEndThing} = End(arr, nRows, nCols)
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
-    return {result: 252, arrOut: arr, singleProfits: singleProfitsResult}    
+    return {
+        arrOut: arr, 
+        singleProfitsArray: singleProfitsResult,
+        endProfit: nEndProfit, 
+        endExpense: nEndExpense, 
+        endEndThing: nEndThing
+    } 
 }
 
 const initializeData = (nRows, nCols, input) => {

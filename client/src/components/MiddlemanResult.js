@@ -24,32 +24,34 @@ const MiddlemanResult = (props) => {
 
     const outputData = calculate(input)
     console.log("[MIDDLEMAN-RESULT] ouputData.arrOut");
-    console.log(outputData.arrOut);
-
-
+    console.log(outputData.arrOut); 
 
     return (
         <div style={{whiteSpace: 'pre'}}>    
-            <ResultPresenter label="Single profits"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfits}/></ResultPresenter>
+            <ResultPresenter label="Single profits"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfitsArray}/></ResultPresenter>
             <br/>
             <ResultPresenter label="Routes table">
-                <TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfits}/>
+                <TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfitsArray}/>
             </ResultPresenter>
             <br/>
-            <ResultPresenter label="Profit A">
-                LICZBA
+            <ResultPresenter label="End Profit">
+                {outputData.endProfit}
             </ResultPresenter>
             <br/>
-            <ResultPresenter label="Profit A">
-                LICZBA
+            <ResultPresenter label="End Expense">
+                {outputData.endExpense}
+            </ResultPresenter>
+            <br/>
+            <ResultPresenter label="End Expense">
+                {outputData.endExpense}
             </ResultPresenter>
             <br/>
             
             {/* Result: {JSON.stringify(outputData, null, 4)}<br/> */}
-            {/* <div>arr state: // TODO: Routes here
+            <div>arr state: // TODO: Routes here
                 <TableOver2DArrayJson array={outputData.arrOut}/>
-                <TableOver2DArray array={outputData.routes}/>
-            </div>  */}
+                {/* <TableOver2DArray array={outputData.routes}/> */}
+            </div> 
 
         </div>
     )
