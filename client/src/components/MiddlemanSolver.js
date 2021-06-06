@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {useRef, useState} from "react";
 import DynamicTable from "./DynamicTable";
 import MiddlemanResult from "./MiddlemanResult";
 import styles from "./DistributionSolver.module.css";
