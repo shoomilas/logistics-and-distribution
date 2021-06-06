@@ -27,3 +27,18 @@
 .buttons {
     text-align: right;
 }
+
+.blackness {
+    background-color: black;
+}
+
+.jsonArray {
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 1em
+}
+
+.jsonArray:hover {
+    
+    height: auto
+}

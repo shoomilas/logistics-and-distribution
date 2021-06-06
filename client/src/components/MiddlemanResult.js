@@ -153,16 +153,21 @@ const TableOver2DArrayJson = (props) => {
     let rows = arrToDisplay.length   
     let cols = arrToDisplay[0].length  
 
-    return(
-        <table style={{whiteSpace: 'pre', maxHeight: '100px', fontSize: 'xx-small'}}>
-            {_.range(0,rows).map( (row) => 
-            <tr>
-                {
-                    _.range(0,cols).map( (col)=> <td>{JSON.stringify(arrToDisplay[row][col])}</td>)
-                    
-                }
-            </tr>)}
-        </table>
+    let styleA = {
+        overflowY: "auto", overflowX:"auto", display:"none" 
+        }
+
+    return(<div className={styles.jsonArray} >
+            <table style={{whiteSpace: 'pre', maxHeight: '100px', fontSize: 'xx-small'}}>
+                {_.range(0,rows).map( (row) => 
+                <tr>
+                    {
+                        _.range(0,cols).map( (col)=> <td>{JSON.stringify(arrToDisplay[row][col])}</td>)
+                        
+                    }
+                </tr>)}
+            </table>
+        </div>
     )
 }
 
