@@ -10,14 +10,14 @@ export const calculate = (input) => {
     arr = wyznaczenieInicijalnychWartosciWolumentow(arr, nRows, nCols)
     arr = uzupelnianieWolumenowNaFakeDostawcachOdbiorcach(arr, nRows, nCols)
     arr = przetwarzanieIteracjiAlgorystmuOptymalizacyjnego(arr, nRows, nCols)
-    let {nEndProfit, nEndExpense, nEndThing} = End(arr, nRows, nCols)
+    let {nEndBigProfit, nEndExpense, nEndProfit} = End(arr, nRows, nCols)
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
     return {
         arrOut: arr, 
         singleProfitsArray: singleProfitsResult,
         endProfit: nEndProfit, 
         endExpense: nEndExpense, 
-        endEndThing: nEndThing
+        endBigProfit: nEndBigProfit
     } 
 }
 
