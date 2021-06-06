@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-export const calculate = (input, buyers, suppliers) => {
+export const calculate = (input, suppliers, buyers) => {
     console.log("<MIDDLEMAN_SOLVER_ALGO>");
     console.log(input);
     // let nRows = 4; // suppliers + 1
@@ -30,12 +30,14 @@ const initializeData = (nRows, nCols, input) => {
     let nStop = 0;
 
     let aTab = [
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}]
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}]
     ];
 
     console.log(aTab);
@@ -60,9 +62,16 @@ const initializeData = (nRows, nCols, input) => {
     // Handle input
     _.range(1,nCols).map( (col) => aTab[0][col] = { demand: input.demand[col-1], profit: input.prices[col-1]} )
     _.range(1,nRows).map( (row) => aTab[row][0] = { supply: input.supply[row-1], profit: input.costs[row-1]} )
-    _.range(1,nRows).map((row) => _.range(1,nCols).map((col) => { 
-        aTab[row][col].expense = input.singleCosts[row-1][col-1]
+    // _.range(1,nRows).map((row) => _.range(1,nCols).map((col) => { 
+    //     aTab[row][col].expense = input.singleCosts[row-1][col-1]
+    // }))
+
+    let suppliers = nRows - 1
+    let buyers = nCols - 1
+    _.range(0,suppliers).map((row) => _.range(0,buyers).map((col) => { 
+        aTab[row+1][col+1].expense = input.singleCosts[row][col]
     }))
+
 
     // Calculate single profits
     _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {

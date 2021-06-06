@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import DynamicTable from "./DynamicTable";
 import MiddlemanResult from "./MiddlemanResult";
+import ErrorBoundary from "./ErrorBoundary"
 import styles from "./DistributionSolver.module.css";
 import _ from "lodash";
 
@@ -23,7 +24,9 @@ const MiddlemanSolver = () => {
   const prepOutcome = (event) => {
     const returnedElem = () => (
       <div>
+      {/* <ErrorBoundary> */}
         <MiddlemanResult input={inputData} />
+      {/* </ErrorBoundary> */}
       </div>
     );
 

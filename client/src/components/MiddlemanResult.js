@@ -9,7 +9,7 @@ const MiddlemanResult = (props) => {
     let suppliers = props.input.supply.length
     let buyers = props.input.demand.length
 
-    input = { // TODO: REMOVE SET INPUT
+    let input1 = { // TODO: REMOVE SET INPUT
         singleCosts: [
             [8.0, 14.0, 17.0],
             [12.0, 9, 19],
@@ -20,8 +20,10 @@ const MiddlemanResult = (props) => {
         demand: [10,28,27],
         prices: [30,25,30],
     }
+    let suppliers1 = input1.supply.length
+    let buyers1    = input1.demand.length
 
-    input = { // TODO: REMOVE SET INPUT
+    let input2 = { // TODO: REMOVE SET INPUT
         singleCosts: [
             [8.0, 14.0, 17.0],
             [12.0, 9, 19]
@@ -32,11 +34,16 @@ const MiddlemanResult = (props) => {
         demand: [10,28,27],
         prices: [30,25,30],
     }
+    console.log();
+    let suppliers2 = input2.supply.length
+    let buyers2    = input2.demand.length
+
 
     console.log("[MIDDLEMAN-RESULT] props.input");
     console.log(input);
-
-    const outputData = calculate(input, suppliers, buyers)
+    // const outputData = calculate(input1, suppliers1, buyers1)
+    const outputData = calculate(input2, suppliers2, buyers2)
+    // const outputData = calculate(input, suppliers, buyers)
     console.log("[MIDDLEMAN-RESULT] ouputData.arrOut");
     console.log(outputData.arrOut); 
 
