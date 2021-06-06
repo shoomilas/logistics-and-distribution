@@ -1,5 +1,4 @@
 import _ from "lodash";
-// const _ = require("lodash")
 
 export const calculate = (input) => {
     console.log("<MIDDLEMAN_SOLVER_ALGO>");
@@ -17,8 +16,7 @@ export const calculate = (input) => {
     return {result: 252, arrOut: arr, singleProfits: singleProfitsResult}    
 }
 
-const initializeData = (nRows, nCols, input) => { 
-// const initializeData = (nRows, nCols) => {
+const initializeData = (nRows, nCols, input) => {
     console.log("initializeData()");
     let nDemandSum = 0;
     let nSupplySum = 0;
@@ -33,6 +31,8 @@ const initializeData = (nRows, nCols, input) => {
         [{}, {}, {}, {}, {}, {}],
         [{}, {}, {}, {}, {}, {}]
     ];
+
+    
     
     _.range(1, nCols).map((col) => aTab[0][col] = {demand: 0, profit: 0})
     _.range(1, nRows).map((row) => aTab[row][0] = {supply: 0, profit: 0})

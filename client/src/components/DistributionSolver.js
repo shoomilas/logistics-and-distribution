@@ -15,11 +15,6 @@ const DistributionSolver = () => {
     setSolverTable(returnedElem);
   };
 
-  // const prepDebugTable = (event) => {
-  //   event.preventDefault();
-  //   setSolverTable(<div>{rowsInputRef.current.value} x {colsInputRef.current.value}</div>); 
-  // };
-
   return (
     <div className={styles["distributionsolver"]}>
       <h1>Optimal distribution problem</h1>      
