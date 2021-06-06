@@ -6,9 +6,6 @@ import _ from "lodash";
 
 const MiddlemanResult = (props) => {
     let input = props.input
-    let suppliers = props.input.supply.length
-    let buyers = props.input.demand.length
-
     let input1 = { // TODO: REMOVE SET INPUT
         singleCosts: [
             [8.0, 14.0, 17.0],
@@ -19,9 +16,7 @@ const MiddlemanResult = (props) => {
         costs: [10,12,15],
         demand: [10,28,27],
         prices: [30,25,30],
-    }
-    let suppliers1 = input1.supply.length
-    let buyers1    = input1.demand.length
+    } 
 
     let input2 = { // TODO: REMOVE SET INPUT
         singleCosts: [
@@ -33,17 +28,74 @@ const MiddlemanResult = (props) => {
         costs: [10,12],
         demand: [10,28,27],
         prices: [30,25,30],
+    } 
+    let input3 = { // TODO: REMOVE SET INPUT
+        singleCosts: [
+            [8.0, 14.0],
+            [12.0, 9]
+        ],
+        supply: [20,30],
+        costs: [10,12],
+        demand: [10,28],
+        prices: [30,25]
     }
-    console.log();
-    let suppliers2 = input2.supply.length
-    let buyers2    = input2.demand.length
+    let input4 = { // Dla tego ma świrować?
+        singleCosts: [
+            [17.0,15.0,16.0],
+            [7.0,7.0,1.0],
+            [15.0,14.0,3.0]
+        ],
+        supply: [20,30,55],
+        costs: [10,12,14],
+        demand: [28,37,45],
+        prices: [30,30,25]
+    }
 
+    let input5 = { // Dla tego ma świrować?
+        singleCosts: [
+            [4,7,2],
+            [8,10,4],
+        ],
+        supply: [20,20],
+        costs: [6,9],
+        demand: [15,12,18],
+        prices: [15,14,16]
+    }
+    let inputZieja = { // 4dx2o
+        singleCosts: [
+            [3,4],
+            [5,6],
+            [7,8],
+            [9,10]
+        ],
+        supply: [20,30,10,10],
+        costs: [10,12,9,8],
+        demand: [30,44],
+        prices: [30,25]
+    }
+
+    let inputEwe = {
+        singleCosts: [
+            [8,14],
+            [12,9],
+            [17,19],
+            [10,15]
+        ],
+        supply: [20,30,27,14],
+        costs: [10,12,30,20],
+        demand: [10,28],
+        prices: [30,25]
+    }
 
     console.log("[MIDDLEMAN-RESULT] props.input");
     console.log(input);
-    // const outputData = calculate(input1, suppliers1, buyers1)
-    const outputData = calculate(input2, suppliers2, buyers2)
-    // const outputData = calculate(input, suppliers, buyers)
+    const outputData = calculate(inputZieja)
+
+    // const outputData = calculate(input)
+    // const outputData = calculate(input1)
+    // const outputData = calculate(input2)
+    // const outputData = calculate(input3)
+
     console.log("[MIDDLEMAN-RESULT] ouputData.arrOut");
     console.log(outputData.arrOut); 
 
@@ -52,11 +104,7 @@ const MiddlemanResult = (props) => {
             <ResultPresenter label="Single profits"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfitsArray}/></ResultPresenter>
             <br/>
             <ResultPresenter label="Routes table">
-                <TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfitsArray}/>
-            </ResultPresenter>
-            <br/>
-            <ResultPresenter label="End Profit">
-                {outputData.endProfit}
+                <TableOver2DArrayLabeledString xLabel='O' yLabel='D' array={outputData.transportationPlan}/>
             </ResultPresenter>
             <br/>
             <ResultPresenter label="End Expense">
@@ -67,13 +115,15 @@ const MiddlemanResult = (props) => {
                 {outputData.endBigProfit}
             </ResultPresenter>
             <br/>
-            
+            <ResultPresenter label="End Profit">
+                {outputData.endProfit}
+            </ResultPresenter>
+            <br/>
             {/* Result: {JSON.stringify(outputData, null, 4)}<br/> */}
             <div>arr state: // TODO: Routes here
                 <TableOver2DArrayJson array={outputData.arrOut}/>
                 {/* <TableOver2DArray array={outputData.routes}/> */}
-            </div> 
-
+            </div>
         </div>
     )
 }
@@ -110,7 +160,28 @@ const TableOver2DArrayJson = (props) => {
             </tr>)}
         </table>
     )
+}
 
+const TableOver2DArrayLabeledString = (props) => {
+    let arrToDisplay = props.array
+    let xLabel = props.xLabel
+    let yLabel = props.yLabel
+    let rows = arrToDisplay.length   
+    let cols = arrToDisplay[0].length  
+
+    return(
+        <table className={styles["dynamic-table"]}>
+            <tr>
+                <td></td>{_.range(0,cols).map( (col) => <td><b>{`${xLabel}${col}`}</b></td>)} 
+            </tr>
+            {_.range(0,rows).map( (row) => 
+            <tr><td><b>{`${yLabel}${row}`}</b></td>
+                {
+                    _.range(0,cols).map( (col)=><td>{arrToDisplay[row][col]}</td>)
+                }
+            </tr>)}
+        </table>
+    )
 }
 
 const TableOver2DArrayLabeled = (props) => {
@@ -133,7 +204,6 @@ const TableOver2DArrayLabeled = (props) => {
             </tr>)}
         </table>
     )
-
 }
 
 const TableOver2DArray = (props) => {
