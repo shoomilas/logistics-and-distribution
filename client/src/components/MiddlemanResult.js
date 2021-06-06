@@ -34,13 +34,14 @@ const MiddlemanResult = (props) => {
             Single Costs [0][1]: {input.singleCosts[0][1]} <br/>
             Supplier[0]: {input.supply[0]} <br/>
             Supplier[1]: {input.supply[1]} <br/>
-            Result: {JSON.stringify(outputData, null, 4)}<br/>
+            <hr/>
+            {/* Result: {JSON.stringify(outputData, null, 4)}<br/> */}
 
             <div>Single Costs:
                 <TableOver2DArray array={outputData.singleProfits}/>
             </div>
 
-            <div>Routes:
+            <div>arr state: // TODO: Routes here
                 <TableOver2DArrayJson array={outputData.arrOut}/>
                 {/* <TableOver2DArray array={outputData.routes}/> */}
             </div>
