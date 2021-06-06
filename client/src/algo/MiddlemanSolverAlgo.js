@@ -338,6 +338,6 @@ const End = (aTab, nRows, nCols) => {
     }))
     nEndProfit = nEndBigProfit - nEndExpense;
     console.log (`nEndBigProfit: ${nEndBigProfit} nEndExpense: ${nEndExpense} nEndThing: ${nEndProfit}`)
-    return {nEndProfit: nEndBigProfit, nEndExpense, nEndThing: nEndProfit}
+    return {nEndBigProfit: nEndBigProfit, nEndExpense: nEndExpense, nEndProfit: nEndProfit}
 
 }
