@@ -1,6 +1,10 @@
 import _ from "lodash";
 
-export const calculate = (input, buyers, suppliers) => {
+// export const calculate = (input, suppliers, buyers) => {
+export const calculate = (input) => {
+    let suppliers = input.supply.length
+    let buyers    = input.demand.length
+
     console.log("<MIDDLEMAN_SOLVER_ALGO>");
     console.log(input);
     // let nRows = 4; // suppliers + 1
@@ -13,13 +17,15 @@ export const calculate = (input, buyers, suppliers) => {
     arr = uzupelnianieWolumenowNaFakeDostawcachOdbiorcach(arr, nRows, nCols)
     arr = przetwarzanieIteracjiAlgorystmuOptymalizacyjnego(arr, nRows, nCols)
     let {nEndBigProfit, nEndExpense, nEndProfit} = End(arr, nRows, nCols)
+    let transportationPlan = extractTransportationPlan(arr, buyers, suppliers)
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
     return {
         arrOut: arr, 
         singleProfitsArray: singleProfitsResult,
         endProfit: nEndProfit, 
         endExpense: nEndExpense, 
-        endBigProfit: nEndBigProfit
+        endBigProfit: nEndBigProfit,
+        transportationPlan: transportationPlan
     } 
 }
 
@@ -30,12 +36,14 @@ const initializeData = (nRows, nCols, input) => {
     let nStop = 0;
 
     let aTab = [
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
-        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}]
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {},{},{},{},{},{}]
     ];
 
     console.log(aTab);
@@ -70,6 +78,7 @@ const initializeData = (nRows, nCols, input) => {
         aTab[row+1][col+1].expense = input.singleCosts[row][col]
     }))
 
+
     // Calculate single profits
     _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
         aTab[row][col].profit = aTab[0][col].profit - aTab[row][col].expense - aTab[row][0].profit;
@@ -100,6 +109,23 @@ const extractSingleProfitsArray = (arr, nBuyers, nSuppliers) => {
     //     )
     // )
     // return result
+}
+
+const extractTransportationPlan = (arr, nBuyers, nSuppliers) => {
+    let section = arr.slice(1, nSuppliers+1).map((x) => x.slice(1, nBuyers+1))
+    let rows = section.length 
+    let cols = section[0].length
+    let result = Array.from({length: nSuppliers},()=> Array.from({length: nBuyers}, () => ''))
+    _.range(0, rows).map( row => _.range(0, cols).map( (col) => {
+            let found = section[row][col].volume
+            let cellVal = found
+            if (found == null || found == undefined || found == 0) {                
+                cellVal = 'x'
+            }
+            result[row][col] = cellVal
+        })
+    )
+    return result
 }
 
 const wyznaczenieInicijalnychWartosciWolumentow = (aTab, nRows, nCols) => {
@@ -178,6 +204,7 @@ const przetwarzanieIteracjiAlgorystmuOptymalizacyjnego = (arr, nRows, nCols) => 
                 nStop = 1;
             } else {
                 console.log("Nieokreślone rozwiązanie")
+                alert("NIEOKRESLONE ROZWIAZANIE")
                 nStop = 1;
             }
         }
