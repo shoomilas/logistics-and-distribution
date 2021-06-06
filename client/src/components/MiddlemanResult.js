@@ -89,10 +89,10 @@ const MiddlemanResult = (props) => {
 
     console.log("[MIDDLEMAN-RESULT] props.input");
     console.log(input);
-    const outputData = calculate(inputZieja)
+    // const outputData = calculate(inputZieja)
 
     // const outputData = calculate(input)
-    // const outputData = calculate(input1)
+    const outputData = calculate(input1)
     // const outputData = calculate(input2)
     // const outputData = calculate(input3)
 
@@ -100,7 +100,9 @@ const MiddlemanResult = (props) => {
     console.log(outputData.arrOut); 
 
     return (
-        <div style={{whiteSpace: 'pre'}}>    
+        <div style={{whiteSpace: 'pre'}}>
+            <ResultPresenter label="Single transportation costs"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.inputData.singleCosts}/></ResultPresenter>
+            <br/>
             <ResultPresenter label="Single profits"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfitsArray}/></ResultPresenter>
             <br/>
             <ResultPresenter label="Routes table">
@@ -118,6 +120,8 @@ const MiddlemanResult = (props) => {
             <ResultPresenter label="End Profit">
                 {outputData.endProfit}
             </ResultPresenter>
+            <br/>
+            <hr/>
             <br/>
             {/* Result: {JSON.stringify(outputData, null, 4)}<br/> */}
             <div>arr state: // TODO: Routes here

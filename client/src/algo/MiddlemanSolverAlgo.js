@@ -20,6 +20,7 @@ export const calculate = (input) => {
     let transportationPlan = extractTransportationPlan(arr, buyers, suppliers)
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
     return {
+        inputData: input,
         arrOut: arr, 
         singleProfitsArray: singleProfitsResult,
         endProfit: nEndProfit, 
