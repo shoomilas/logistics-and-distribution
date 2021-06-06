@@ -1,12 +1,14 @@
 import _ from "lodash";
 
-export const calculate = (input) => {
+export const calculate = (input, buyers, suppliers) => {
     console.log("<MIDDLEMAN_SOLVER_ALGO>");
     console.log(input);
-    let nRows = 4; // suppliers + 1 
-    let nCols = 4; // buyers + 1
+    // let nRows = 4; // suppliers + 1
+    // let nCols = 4; // buyers  +  1
+    let nRows = suppliers + 1;
+    let nCols = buyers + 1;
     let arr = initializeData(nRows, nCols, input)
-    let singleProfitsResult = extractSingleProfitsArray(arr)
+    let singleProfitsResult = extractSingleProfitsArray(arr, buyers, suppliers)
     arr = wyznaczenieInicijalnychWartosciWolumentow(arr, nRows, nCols)
     arr = uzupelnianieWolumenowNaFakeDostawcachOdbiorcach(arr, nRows, nCols)
     arr = przetwarzanieIteracjiAlgorystmuOptymalizacyjnego(arr, nRows, nCols)
@@ -25,23 +27,25 @@ const initializeData = (nRows, nCols, input) => {
     console.log("initializeData()");
     let nDemandSum = 0;
     let nSupplySum = 0;
-    let i, j, k, l;
     let nStop = 0;
 
     let aTab = [
-        [{}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}]
+        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}],
+        [{}, {}, {}, {}, {}, {}, {},{},{},{},{}]
     ];
 
-    
-    
+    console.log(aTab);
+
     _.range(1, nCols).map((col) => aTab[0][col] = {demand: 0, profit: 0})
     _.range(1, nRows).map((row) => aTab[row][0] = {supply: 0, profit: 0})
-    aTab[4][0] = {supply: 0, demand: 0}  // TODO: make this dynamic (nRows instaed of 4?)
+
+    // aTab[4][0] = {supply: 0, demand: 0}  // TODO: make this dynamic (nRows instaed of 4?)
+    aTab[nRows][0] = {supply: 0, demand: 0} // ??????????????????????????????????????????
+
     _.range(1, nRows).map((row) => aTab[row][nCols + 1] = {alpha: null})
     _.range(1, nCols).map((col) => aTab[nRows + 1][col] = {beta: null})
     
@@ -69,16 +73,27 @@ const initializeData = (nRows, nCols, input) => {
     return aTab;
 }
 
-const extractSingleProfitsArray = (arr) => {
-    let section = arr.slice(1, arr.length+1).map( (x) => x.slice(1, x.length+1))
-    let rows = section.length - 2 
-    let cols = section[0].length - 2 
-    let result = Array.from({length: section.length - 2},()=> Array.from({length: section[0].length - 2}, () => 0))
+const extractSingleProfitsArray = (arr, nBuyers, nSuppliers) => {
+    let section = arr.slice(1, nSuppliers+1).map((x) => x.slice(1, nBuyers+1))
+    let rows = section.length 
+    let cols = section[0].length
+    let result = Array.from({length: nSuppliers},()=> Array.from({length: nBuyers}, () => 0))
     _.range(0, rows).map( row => _.range(0, cols).map( (col) => 
             result[row][col] = section[row][col].profit
         )
     )
     return result
+
+    // let section = arr.slice(1, arri.length+1).map( (x) => x.slice(1, x.length+1))
+
+    // let rows = section.length - 2 
+    // let cols = section[0].length - 2 
+    // let result = Array.from({length: section.length - 2},()=> Array.from({length: section[0].length - 2}, () => 0))
+    // _.range(0, rows).map( row => _.range(0, cols).map( (col) => 
+    //         result[row][col] = section[row][col].profit
+    //     )
+    // )
+    // return result
 }
 
 const wyznaczenieInicijalnychWartosciWolumentow = (aTab, nRows, nCols) => {

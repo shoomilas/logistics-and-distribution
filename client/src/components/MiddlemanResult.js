@@ -6,8 +6,10 @@ import _ from "lodash";
 
 const MiddlemanResult = (props) => {
     let input = props.input
+    let suppliers = props.input.supply.length
+    let buyers = props.input.demand.length
 
-    input = {   // TODO: REMOVE SET INPUT
+    input = { // TODO: REMOVE SET INPUT
         singleCosts: [
             [8.0, 14.0, 17.0],
             [12.0, 9, 19],
@@ -22,7 +24,7 @@ const MiddlemanResult = (props) => {
     console.log("[MIDDLEMAN-RESULT] props.input");
     console.log(input);
 
-    const outputData = calculate(input)
+    const outputData = calculate(input, suppliers, buyers)
     console.log("[MIDDLEMAN-RESULT] ouputData.arrOut");
     console.log(outputData.arrOut); 
 
