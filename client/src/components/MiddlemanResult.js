@@ -124,7 +124,7 @@ const MiddlemanResult = (props) => {
             <hr/>
             <br/>
             {/* Result: {JSON.stringify(outputData, null, 4)}<br/> */}
-            <div>arr state: // TODO: Routes here
+            <div>Array State:
                 <TableOver2DArrayJson array={outputData.arrOut}/>
                 {/* <TableOver2DArray array={outputData.routes}/> */}
             </div>
