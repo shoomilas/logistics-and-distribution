@@ -6,7 +6,7 @@ import _ from "lodash";
 
 const MiddlemanResult = (props) => {
     let input = props.input
-    let input1 = { // TODO: REMOVE SET INPUT
+    let input1 = { // v
         singleCosts: [
             [8.0, 14.0, 17.0],
             [12.0, 9, 19],
@@ -18,7 +18,7 @@ const MiddlemanResult = (props) => {
         prices: [30,25,30],
     } 
 
-    let input2 = { // TODO: REMOVE SET INPUT
+    let input2 = { // v
         singleCosts: [
             [8.0, 14.0, 17.0],
             [12.0, 9, 19]
