@@ -6,13 +6,12 @@ export const calculate = (input) => {
     console.log(input);
     let nRows = 4; // suppliers + 1 
     let nCols = 4; // buyers + 1
-    let nProfitAtTheEnd, nExpense = 0;
     let arr = initializeData(nRows, nCols, input)
     let singleProfitsResult = extractSingleProfitsArray(arr)
     arr = wyznaczenieInicijalnychWartosciWolumentow(arr, nRows, nCols)
     arr = uzupelnianieWolumenowNaFakeDostawcachOdbiorcach(arr, nRows, nCols)
     arr = przetwarzanieIteracjiAlgorystmuOptymalizacyjnego(arr, nRows, nCols)
-
+    let {nEndProfit, nEndExpense, nEndThing} = End(arr, nRows, nCols)
     console.log("</MIDDLEMAN_SOLVER_ALGO>");
     return {result: 252, arrOut: arr, singleProfits: singleProfitsResult}    
 }
@@ -310,7 +309,29 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
         console.log("Obliczenie zysku koncowego");
         nRet = -1
     }
-    
+
     return nRet
     // return aTab;
+}
+
+const End = (aTab, nRows, nCols) => {
+    let nEndBigProfit = 0;
+    let nEndExpense = 0;
+    let nEndProfit= 0;
+    _.range(1,nRows).map((row) => _.range(1,nCols).map((col) =>{
+        if (aTab[row][col].volume != null && aTab[row][col].profit != null) {
+            nEndBigProfit += aTab[row][0].profit * aTab[row][col].volume;
+        }
+    } ))
+    _.range(1,nRows).map((row) => _.range(1,nCols).map((col) =>{
+        if (aTab[row][col].volume != null && aTab[row][col].expense != null && aTab[0][col] != null) {
+            nEndExpense += aTab[row][col].expense * aTab[row][col].volume;
+            nEndExpense += aTab[0][col].profit * aTab[row][col].volume;
+        }
+
+    }))
+    nEndProfit = nEndBigProfit - nEndExpense;
+    console.log (`nEndBigProfit: ${nEndBigProfit} nEndExpense: ${nEndExpense} nEndThing: ${nEndProfit}`)
+    return {nEndProfit: nEndBigProfit, nEndExpense, nEndThing: nEndProfit}
+
 }
