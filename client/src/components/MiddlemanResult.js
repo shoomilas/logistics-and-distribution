@@ -21,6 +21,18 @@ const MiddlemanResult = (props) => {
         prices: [30,25,30],
     }
 
+    input = { // TODO: REMOVE SET INPUT
+        singleCosts: [
+            [8.0, 14.0, 17.0],
+            [12.0, 9, 19]
+            // [12, 9, 7]
+        ],
+        supply: [20,30],
+        costs: [10,12],
+        demand: [10,28,27],
+        prices: [30,25,30],
+    }
+
     console.log("[MIDDLEMAN-RESULT] props.input");
     console.log(input);
 
