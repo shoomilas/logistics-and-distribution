@@ -18,6 +18,9 @@ export const initializeData = (nRows, nCols) => {
         [{}, {}, {}, {}, {}, {}]
     ];
 
+    // let aTab = Array.from({ length: nRows }, () => Array.from({ length: nCols }, () => {} ))
+
+
     _.range(1,nCols).map((col) => aTab[0][col] = { demand: 0, profit: 0 }) // TODO: Buyers info input handling 
     _.range(1,nRows).map((row) => aTab[row][0] = { supply: 0, profit: 0 }) // TODO: Suppliers info input handling
     aTab[4][0] = { supply: 0, demand: 0 }  // TODO: make this dynamic
@@ -40,11 +43,6 @@ export const initializeData = (nRows, nCols) => {
     return aTab;
 }
 
-const wyznaczenieInicijalnychWartosciWolumentow = (arr) => {
-    
-}
-
 let nRows = 4;
 let nCols = 4;
-let nProfitAtTheEnd, nExpense;
 let arr = initializeData(nRows, nCols)
