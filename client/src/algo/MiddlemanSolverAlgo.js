@@ -55,8 +55,8 @@ const initializeData = (nRows, nCols, input) => {
     // aTab[4][0] = {supply: 0, demand: 0}  // TODO: make this dynamic (nRows instaed of 4?)
     aTab[nRows][0] = {supply: 0, demand: 0} // ??????????????????????????????????????????
 
-    _.range(1, nRows).map((row) => aTab[row][nCols + 1] = {alpha: null})
-    _.range(1, nCols).map((col) => aTab[nRows + 1][col] = {beta: null})
+    _.range(1, nRows+1).map((row) => aTab[row][nCols + 1] = {alpha: null})
+    _.range(1, nCols+1).map((col) => aTab[nRows + 1][col] = {beta: null})
     
     // Alphas/Betas initialize
     _.range(1, nRows).map((row) => nSupplySum += aTab[row][0].supply)
@@ -66,10 +66,15 @@ const initializeData = (nRows, nCols, input) => {
         aTab[0][nCols] = {demand: nSupplySum, profit: 0}
     }
 
+
+    _.range(1, nRows).map((row) => _.range(1, nCols).map( (col) => {
+        aTab[row][col] = { "expense": 0, "profit": 0, "volume": null, "delta": null, "deltaSign": null, "used": 0 };
+    }))			
+
     // Handle input
-    _.range(1,nCols).map( (col) => aTab[0][col] = { demand: input.demand[col-1], profit: input.prices[col-1]} )
-    _.range(1,nRows).map( (row) => aTab[row][0] = { supply: input.supply[row-1], profit: input.costs[row-1]} )
-    // _.range(1,nRows).map((row) => _.range(1,nCols).map((col) => { 
+    _.range(1, nCols).map( (col) => aTab[0][col] = { demand: input.demand[col-1], profit: input.prices[col-1]} )
+    _.range(1, nRows).map( (row) => aTab[row][0] = { supply: input.supply[row-1], profit: input.costs[row-1]} )
+    // _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => { 
     //     aTab[row][col].expense = input.singleCosts[row-1][col-1]
     // }))
 
@@ -137,7 +142,7 @@ const wyznaczenieInicijalnychWartosciWolumentow = (aTab, nRows, nCols) => {
         let nMaxValue = -999999;
 
         nStop = 1;
-        _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+        _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => {
             if (aTab[row][col].used === 0) {
                 nStop = 0;
                 if (aTab[row][col].profit > nMaxValue) {
@@ -152,12 +157,12 @@ const wyznaczenieInicijalnychWartosciWolumentow = (aTab, nRows, nCols) => {
                 aTab[nRowMax][nColMax].volume = aTab[nRowMax][0].supply;
                 aTab[0][nColMax].demand -= aTab[nRowMax][0].supply;
                 aTab[nRowMax][0].supply = 0;
-                _.range(1, nCols).map((cols) => aTab[nRowMax][cols].used = 1)
+                _.range(1, nCols+1).map((cols) => aTab[nRowMax][cols].used = 1)
             } else {
                 aTab[nRowMax][nColMax].volume = aTab[0][nColMax].demand;
                 aTab[nRowMax][0].supply -= aTab[0][nColMax].demand;
                 aTab[0][nColMax].demand = 0;
-                _.range(1, nRows).map( (row) => aTab[row][nColMax].used = 1)
+                _.range(1, nRows+1).map( (row) => aTab[row][nColMax].used = 1)
             }
         }
     }
@@ -165,11 +170,11 @@ const wyznaczenieInicijalnychWartosciWolumentow = (aTab, nRows, nCols) => {
 }
 
 const uzupelnianieWolumenowNaFakeDostawcachOdbiorcach = (aTab, nRows, nCols) => {
-    _.range(1, nRows).map((row) => {
+    _.range(1, nRows+1).map((row) => {
         aTab[row][nCols].volume = (aTab[row][0].supply > 0) ? aTab[row][0].supply : null;
         aTab[row][0].supply = 0;
     })
-    _.range(1, nCols).map((cols) => {
+    _.range(1, nCols+1).map((cols) => {
         aTab [nRows][cols].volume = (aTab[0][cols].demand > 0) ? aTab [0][cols].demand : null;
         aTab[0][cols].demand = 0;
     })
@@ -230,11 +235,11 @@ const pm_Iteration_Calculate = (aTab, nRows, nCols, nIteration) => {
 
 const wyzerowanieAlfaBeta = (aTab, nRows, nCols) => {
     console.log("wyzerowanieAlfaBeta()");
-    _.range(1, nRows).map((row) => {
+    _.range(1, nRows+1).map((row) => {
             aTab[row][nCols + 1].alpha = null;
         }
     )
-    _.range(1, nCols).map((col) => {
+    _.range(1, nCols+1).map((col) => {
             aTab[nRows + 1][col].beta = null;
         }
     )
@@ -246,7 +251,7 @@ const wyznaczenieAlfaBetadlaRowTab = (aTab, nRows, nCols) => {
     let nStop = 0;
     while (nStop == 0) {
         nStop = 1;
-        _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+        _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => {
                 let nAlpha = aTab[row][nCols + 1].alpha;
                 let nBeta = aTab[nRows + 1][col].beta;
                 let nProfit = aTab[row][col].profit;
@@ -265,7 +270,7 @@ const wyznaczenieAlfaBetadlaRowTab = (aTab, nRows, nCols) => {
 }
 const zeroDeltaPrevIt = (aTab, nRows, nCols) => {
     console.log("zeroDeltaPrevIt()");
-    _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+    _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => {
             aTab[row][col].delta = null;
             aTab[row][col].deltaSign = null;
         }
@@ -274,7 +279,7 @@ const zeroDeltaPrevIt = (aTab, nRows, nCols) => {
 }
 
 const wyznaczenieDeltaCurIt = (aTab, nRows, nCols) => {
-    _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+    _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => {
             if (aTab[row][col].volume == null) {
                 aTab[row][col].delta = aTab[row][col].profit - aTab[row][nCols + 1].alpha - aTab[nRows + 1][col].beta;
             }
@@ -289,7 +294,7 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
     let nMaxValue = -999999;
     let nRet = null
 
-    _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+    _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => {
         let nStop = 0;
         if (aTab[row][col].delta > nMaxValue) {
             nRowMax = row;
@@ -302,7 +307,7 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
         let nRowSel = 0;
         let nColSel = 0;
         let nStop = 0;
-       _.range(1,nRows).map((row) => {
+       _.range(1, nRows+1).map((row) => {
            if (nStop == 0) {
                if (row != nRowMax) {
                    if (aTab[row][nColMax].delta == null) {
@@ -310,7 +315,7 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
                    }
                }
                if (nRowSel > 0) {
-                   _.range(1, nCols).map((col) => {
+                   _.range(1, nCols+1).map((col) => {
                        if (aTab[nRowMax][col].delta == null && aTab[nRowSel][col].delta == null) {
                            nColSel = col;
                            nStop = 1;
@@ -334,7 +339,7 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
                 nVolumeChange = aTab[nRowMax][nColSel].volume;
             }
 
-            _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+            _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => {
                     if (aTab[row][col].deltaSign != null) {
                         aTab[row][col].volume += aTab[row][col].deltaSign * nVolumeChange;
                         if (aTab[row][col].volume == 0) {
@@ -349,7 +354,7 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
         }
     } else {
         // Wypisanie do tabeli 'trasy'
-        _.range(1, nRows).map((row) => _.range(1, nCols).map((col) => {
+        _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) => {
             if (aTab[row][col].volume == null) {
                 // TODO: ROUTES array save here
                 // document.getElementById("wD" + row + "O" + col).innerHTML = 'x';
@@ -373,12 +378,12 @@ const End = (aTab, nRows, nCols) => {
     let nEndBigProfit = 0;
     let nEndExpense = 0;
     let nEndProfit= 0;
-    _.range(1,nRows).map((row) => _.range(1,nCols).map((col) =>{
+    _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) =>{
         if (aTab[row][col].volume != null && aTab[row][col].profit != null) {
             nEndBigProfit += aTab[row][0].profit * aTab[row][col].volume;
         }
     } ))
-    _.range(1,nRows).map((row) => _.range(1,nCols).map((col) =>{
+    _.range(1, nRows+1).map((row) => _.range(1, nCols+1).map((col) =>{
         if (aTab[row][col].volume != null && aTab[row][col].expense != null && aTab[0][col] != null) {
             nEndExpense += aTab[row][col].expense * aTab[row][col].volume;
             nEndExpense += aTab[0][col].profit * aTab[row][col].volume;

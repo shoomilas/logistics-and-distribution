@@ -89,10 +89,10 @@ const MiddlemanResult = (props) => {
 
     console.log("[MIDDLEMAN-RESULT] props.input");
     console.log(input);
-    // const outputData = calculate(inputZieja)
+    const outputData = calculate(inputZieja)
 
     // const outputData = calculate(input)
-    const outputData = calculate(input1)
+    // const outputData = calculate(input1)
     // const outputData = calculate(input2)
     // const outputData = calculate(input3)
 
