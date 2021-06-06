@@ -29,28 +29,46 @@ const MiddlemanResult = (props) => {
 
 
     return (
-        <div style={{whiteSpace: 'pre'}}>
-            Single Costs [0][0]: {input.singleCosts[0][0]} <br/>
-            Single Costs [0][1]: {input.singleCosts[0][1]} <br/>
-            Supplier[0]: {input.supply[0]} <br/>
-            Supplier[1]: {input.supply[1]} <br/>
-            <hr/>
+        <div style={{whiteSpace: 'pre'}}>    
+            <ResultPresenter label="Single profits"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfits}/></ResultPresenter>
+            <br/>
+            <ResultPresenter label="Routes table">
+                <TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfits}/>
+            </ResultPresenter>
+            <br/>
+            <ResultPresenter label="Profit A">
+                LICZBA
+            </ResultPresenter>
+            <br/>
+            <ResultPresenter label="Profit A">
+                LICZBA
+            </ResultPresenter>
+            <br/>
+            
             {/* Result: {JSON.stringify(outputData, null, 4)}<br/> */}
-
-            <div>Single Costs:
-                <TableOver2DArray array={outputData.singleProfits}/>
-            </div>
-
-            <div>arr state: // TODO: Routes here
+            {/* <div>arr state: // TODO: Routes here
                 <TableOver2DArrayJson array={outputData.arrOut}/>
-                {/* <TableOver2DArray array={outputData.routes}/> */}
-            </div>
+                <TableOver2DArray array={outputData.routes}/>
+            </div>  */}
 
         </div>
     )
 }
 
 export default MiddlemanResult
+
+const ResultPresenter = (props) => {
+    return (
+        <div style={{ display: "flex" }}>
+            <div style={{ flex: "50%" }}>
+            <b>{props.label}</b>
+            </div>
+            <div style={{ flex: "50%" }}>
+                {props.children}
+            </div>
+        </div>
+    )
+}
 
 
 const TableOver2DArrayJson = (props) => {
@@ -65,6 +83,29 @@ const TableOver2DArrayJson = (props) => {
                 {
                     _.range(0,cols).map( (col)=> <td>{JSON.stringify(arrToDisplay[row][col])}</td>)
                     
+                }
+            </tr>)}
+        </table>
+    )
+
+}
+
+const TableOver2DArrayLabeled = (props) => {
+    let arrToDisplay = props.array
+    let xLabel = props.xLabel
+    let yLabel = props.yLabel
+    let rows = arrToDisplay.length   
+    let cols = arrToDisplay[0].length  
+
+    return(
+        <table className={styles["dynamic-table"]}>
+            <tr>
+                <td></td>{_.range(0,cols).map( (col) => <td><b>{`${xLabel}${col}`}</b></td>)} 
+            </tr>
+            {_.range(0,rows).map( (row) => 
+            <tr><td><b>{`${yLabel}${row}`}</b></td>
+                {
+                    _.range(0,cols).map( (col)=><td>{+arrToDisplay[row][col]}</td>)
                 }
             </tr>)}
         </table>
