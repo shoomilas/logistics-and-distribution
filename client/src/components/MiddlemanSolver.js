@@ -130,8 +130,8 @@ const MiddlemanSolver = () => {
           handleDataEdit={refreshSingleCosts}
           rows={rowsInputRef.current.value}
           cols={colsInputRef.current.value}
-          rowsLabel="O"
-          colsLabel="D"
+          rowsLabel="B"
+          colsLabel="S"
           defaultValue={0}
         />
         <div className={styles.buttons}>

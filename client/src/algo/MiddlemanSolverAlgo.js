@@ -107,10 +107,10 @@ const extractSingleProfitsArray = (arr, nBuyers, nSuppliers) => {
 }
 
 const extractTransportationPlan = (arr, nBuyers, nSuppliers) => {
-    let section = arr.slice(1, nSuppliers+1).map((x) => x.slice(1, nBuyers+1))
+    let section = arr.slice(1, nSuppliers+1).map((x) => x.slice(1, nBuyers+2))
     let rows = section.length 
     let cols = section[0].length
-    let result = Array.from({length: nSuppliers},() => Array.from({length: nBuyers}, () => ''))
+    let result = Array.from({length: nSuppliers},() => Array.from({length: nBuyers+1}, () => ''))
     _.range(0, rows).map( row => _.range(0, cols).map( (col) => {
             let found = section[row][col].volume
             let cellVal = found

@@ -89,7 +89,7 @@ const MiddlemanResult = (props) => {
 
     console.log("[MIDDLEMAN-RESULT] props.input");
     console.log(input);
-    const outputData = calculate(input)
+    const outputData = calculate(inputEwe)
 
     // const outputData = calculate(input)
     // const outputData = calculate(input1)
@@ -101,12 +101,12 @@ const MiddlemanResult = (props) => {
 
     return (
         <div style={{whiteSpace: 'pre'}}>
-            <ResultPresenter label="Single transportation costs"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.inputData.singleCosts}/></ResultPresenter>
+            <ResultPresenter label="Single transportation costs"><TableOver2DArrayLabeled xLabel='B' yLabel='S' array={outputData.inputData.singleCosts}/></ResultPresenter>
             <br/>
-            <ResultPresenter label="Single profits"><TableOver2DArrayLabeled xLabel='O' yLabel='D' array={outputData.singleProfitsArray}/></ResultPresenter>
+            <ResultPresenter label="Single profits"><TableOver2DArrayLabeled xLabel='B' yLabel='S' array={outputData.singleProfitsArray}/></ResultPresenter>
             <br/>
             <ResultPresenter label="Routes table">
-                <TableOver2DArrayLabeledString xLabel='O' yLabel='D' array={outputData.transportationPlan}/>
+                <TableOver2DArrayLabeledString xLabel='B' yLabel='S' array={outputData.transportationPlan}/>
             </ResultPresenter>
             <br/>
             <ResultPresenter label="End Expense">
