@@ -115,7 +115,7 @@ const DynamicTable = (props) => {
           </tr>
           <tr>
             <td><b>x<sub>i</sub></b> <em>(product amount)</em>:</td>
-            <td>{  _.range(0,xiValues.length).map( (i) => <>x<sub>{i}</sub> = {xiValues[i]}<br/></>  ) }</td>
+            <td>{ _.range(0,xiValues.length).map( (i) => <>x<sub>{i}</sub> = {xiValues[i]}<br/></>  ) }</td>
           </tr>
         </table>
       </>)

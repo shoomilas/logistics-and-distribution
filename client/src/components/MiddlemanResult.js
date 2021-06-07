@@ -113,7 +113,7 @@ const MiddlemanResult = (props) => {
                 {outputData.endExpense}
             </ResultPresenter>
             <br/>
-            <ResultPresenter label="End Big Profit">
+            <ResultPresenter label="End Income">
                 {outputData.endBigProfit}
             </ResultPresenter>
             <br/>

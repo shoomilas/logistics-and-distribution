@@ -9,7 +9,7 @@ const DynamicTable = (props) => {
   const defaultValue = (props.defaultValue == undefined) ? null : props.defaultValue
   const rows = props.rows;
   const cols = props.cols;
-  const [msg, setMsg] = useState("...");
+  const [msg, setMsg] = useState("");
   const [data, setData] = useState(
     Array.from({length: rows},()=> Array.from({length: cols}, () => defaultValue))
   );
@@ -25,7 +25,8 @@ const DynamicTable = (props) => {
 
   const handleDataEdit = (e,row,col) => {
     let val = parseFloat(e.currentTarget.textContent) 
-    setMsg(`data[${row}][${col}] = ${val}`)
+    // setMsg(`data[${row}][${col}] = ${val}`)
+    console.log(`data[${row}][${col}] = ${val}`)
     handleChange2d(data, setData, row, col, val)
     console.log(`[UPDATE] data[${row}][${col}] = ${val}`);
   }
