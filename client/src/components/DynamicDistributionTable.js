@@ -6,7 +6,7 @@ const DynamicTable = (props) => {
   const apiAddress = "http://127.0.0.1:8000/api/distribution/";
   const rows = props.rows;
   const cols = props.cols;
-  const [msg, setMsg] = useState("...");
+  const [msg, setMsg] = useState("");
   const [data, setData] = useState(
     Array.from({ length: rows }, () => Array.from({ length: cols }, () => null))
   );
@@ -44,7 +44,7 @@ const DynamicTable = (props) => {
 
   const handleDataEdit = (e, row, col) => {
     let val = parseFloat(e.currentTarget.textContent);
-    setMsg(`data[${row}][${col}] = ${val}`);
+    // setMsg(`data[${row}][${col}] = ${val}`);
     handleChange2d(data, setData, row, col, val);
     console.log(`[UPDATE] data[${row}][${col}] = ${val}`);
   };
@@ -52,14 +52,14 @@ const DynamicTable = (props) => {
   const handleLimitEdit = (e, row) => {
     let val = parseInt(e.currentTarget.textContent);
     handleChange1d(constraints, setConstraints, row, val);
-    setMsg(`constraints[${row}] = ${val}`);
+    // setMsg(`constraints[${row}] = ${val}`);
     console.log(`[UPDATE] constraints[${row}] = ${val}`);
   };
 
   const handleGainEdit = (e, col) => {
     let val = parseInt(e.currentTarget.textContent);
     handleChange1d(gains, setGains, col, val);
-    setMsg(`gain[${col}] = ${val}`);
+    // setMsg(`gain[${col}] = ${val}`);
     console.log(`[UPDATE] gains[${col}] = ${val}`);
   };
 
@@ -67,14 +67,14 @@ const DynamicTable = (props) => {
     let val = parseInt(e.currentTarget.textContent);
 
     handleChange1d(pieces, setPieces, col, val);
-    setMsg(`pieces_min[${col}] = ${val}`);
+    // setMsg(`pieces_min[${col}] = ${val}`);
     console.log(`[UPDATE] pieces_min[${col}] = ${val}`);
   };
 
   const handlePiecesMaxEdit = (e, col) => {
     let val = parseInt(e.currentTarget.textContent);
     handleChange1d(piecesMax, setPiecesMax, col, val);
-    setMsg(`pieces_max[${col}] = ${val}`);
+    // setMsg(`pieces_max[${col}] = ${val}`);
     console.log(`[UPDATE] pieces_max[${col}] = ${val}`);
   };
 
@@ -105,6 +105,10 @@ const DynamicTable = (props) => {
         <h1>Result:</h1>
         {/* <p><b>as Json</b> {JSON.stringify(resultFromServer)}</p> */}
         <table>
+        <tr>
+          <td><b>Solution status:</b></td>
+          <td>{resultFromServer.status}</td>
+        </tr>
           <tr>
             <td><b>Maximized product profit</b>:</td>
             <td>{resultFromServer.optimized}</td>
@@ -137,7 +141,7 @@ const DynamicTable = (props) => {
           {_.range(cols).map((col) => (
             <th scope="col">P{col}</th>
           ))}
-          <th scope="col">Limit(h)</th>
+          <th scope="col">Limit</th>
           <tbody>
             {_.range(rows).map((row) => (
               <tr>
@@ -158,7 +162,7 @@ const DynamicTable = (props) => {
             ))}
 
             <tr>
-              <th scope="row">Gain</th>
+              <th scope="row">Profit</th>
               {_.range(cols).map((col) => (
                 <td
                   contentEditable
@@ -174,6 +178,7 @@ const DynamicTable = (props) => {
                   contentEditable
                   onInput={(e) => handlePiecesEdit(e, col)}
                   suppressContentEditableWarning={true}
+                  style={{backgroundColor: "#ccffe1"}}
                 ></td>
               ))}
             </tr>
@@ -185,6 +190,7 @@ const DynamicTable = (props) => {
                   contentEditable
                   onInput={(e) => handlePiecesMaxEdit(e, col)}
                   suppressContentEditableWarning={true}
+                  style={{backgroundColor: "#ccffe1"}}
                 ></td>
               ))}
             </tr>

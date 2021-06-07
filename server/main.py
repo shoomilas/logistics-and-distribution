@@ -80,6 +80,7 @@ def compute_result_pulp(distribution_data: distribution_data):
     print(model)
     print("===")
     status = model.solve()
+    result['status'] = LpStatus[model.status]
     print(f"status: {model.status}, {LpStatus[model.status]}")
     print(f"objective: {model.objective.value()}")
 
