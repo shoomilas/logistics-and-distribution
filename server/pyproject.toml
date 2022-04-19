@@ -1,18 +1,25 @@
-[tool.poetry]
-name = "lad-server"
-version = "0.1.0"
+[project]
+name = ""
+version = ""
 description = ""
-authors = ["shoomilas"]
+authors = [
+    {name = "shoomilas", email = "josh.molais@gmail.com"},
+]
+dependencies = [
+    "fastapi~=0.65",
+    "uvicorn~=0.13",
+    "pulp~=2.4",
+]
+requires-python = ">=3.8"
+dynamic = ["classifiers"]
+license = {text = "MIT"}
 
-[tool.poetry.dependencies]
-python = ">=3.10,<3.11"
-fastapi = "^0.75.2"
-uvicorn = {extras = ["standard"], version = "^0.17.6"}
-PuLP = "^2.6.0"
-scipy = "^1.8.0"
-
-[tool.poetry.dev-dependencies]
+[project.urls]
+homepage = ""
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]

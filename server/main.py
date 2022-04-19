@@ -1,5 +1,6 @@
 import time
 from fastapi import FastAPI
+# from app.api.routes.api import router as api_router
 from pydantic import BaseModel
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
@@ -42,7 +43,6 @@ def read_root():
 
 @app.post("/api/distribution/")
 def create_distribution(distribution_data: distribution_data):
-    print(distribution_data)
     result = compute_result_pulp(distribution_data)
     # return {"input": distribution_data.__dict__, "result": result}
     return result
