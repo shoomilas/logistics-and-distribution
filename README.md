@@ -5,7 +5,7 @@ Small speed-run project creatd with React, React Router, GuLP and FastAPI
 ## Optimal distribution problem solver
 ✅ Uses Python with GuLP library and FastAPI+Uvicorn server as backend
 
-✅ Correctly solves the problem with given 
+✅ Correctly solves the problem with whatever products/materials and constraints
 
 ![DistributionPreview2](https://user-images.githubusercontent.com/34002117/164076763-f615ce4d-7862-4b03-b042-4f051198ab6c.gif)
 
