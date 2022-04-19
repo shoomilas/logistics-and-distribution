@@ -1,5 +1,5 @@
 # Logistics and Distribution
-Small speed-run project created with React, React Router, GuLP and FastAPI
+Small speedrun project created with React, React Router, GuLP and FastAPI
 
 # Feature Preview
 ## Optimal distribution problem solver
