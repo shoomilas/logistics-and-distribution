@@ -76,10 +76,10 @@ const DynamicTable = (props) => {
   const sendComputationDataToServer = async () => {
     setMsg("Data sent to the server. Processing...");
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "text/plain");
+    myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
       values: data,
-      constraints: constraints, // TODO: change to "Limits"
+      constraints: constraints,
       pieces_min: pieces,
       pieces_max: piecesMax,
       gains: gains,
@@ -95,10 +95,10 @@ const DynamicTable = (props) => {
     const handleResult = (result) => {
       resultFromServer = JSON.parse(result)
       let xiValues = _.values(resultFromServer["x_i"])
+      console.log(`CONTENTS ${result}`)
 
       const resultFormatted = (<>
         <h1>Result:</h1>
-        {/* <p><b>as Json</b> {JSON.stringify(resultFromServer)}</p> */}
         <table>
         <tr>
           <td><b>Solution status:</b></td>
