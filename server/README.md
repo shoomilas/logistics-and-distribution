@@ -1,4 +1,4 @@
-# Startup:
-- Install pdm: `pip install pdm`
-- `pdm install`
-- `pdm run uvicorn main:app --reload`
+# Dev Startup:
+- Install pdm: `py -m pip install poetry`
+- `poetry install`
+- `poetry run uvicorn main:app --reload`
