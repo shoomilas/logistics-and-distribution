@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import DynamicTable from "./DynamicTable";
 import MiddlemanResult from "./MiddlemanResult";
-import ErrorBoundary from "./ErrorBoundary"
 import styles from "./DistributionSolver.module.css";
+import stylesMain from "./MainContent.module.css";
 import _ from "lodash";
 
 const MiddlemanSolver = () => {
@@ -24,9 +24,7 @@ const MiddlemanSolver = () => {
   const prepOutcome = (event) => {
     const returnedElem = () => (
       <div>
-      {/* <ErrorBoundary> */}
         <MiddlemanResult input={inputData} />
-      {/* </ErrorBoundary> */}
       </div>
     );
 
@@ -135,7 +133,6 @@ const MiddlemanSolver = () => {
           defaultValue={0}
         />
         <div className={styles.buttons}>
-          {/* <button onClick={prepOutcome}>Solve</button> */}
           <button onClick={prepOutcome}>Solve</button>
         </div>
       </>
@@ -144,7 +141,7 @@ const MiddlemanSolver = () => {
   };
 
   return (
-    <div className={styles["distributionsolver"]}>
+    <div className={`${styles["distributionsolver"]} ${stylesMain["align-item"]}`}>
       <h1>Middleman problem solver</h1>
       <p>Please input the suppliers/buyers config data</p>
       <fieldset>
@@ -175,7 +172,6 @@ const MiddlemanSolver = () => {
       </div>
       <hr />
       {solverInput}
-      <hr />
       {outcomeComponent}
     </div>
   );

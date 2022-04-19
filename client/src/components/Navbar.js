@@ -7,10 +7,10 @@ const Navbar = () => {
     <div className={styles["navbar"]}>
       <ul className={styles["navigation"]}>
         <li>
-          <Link to="/MiddlemanSolver">Middleman</Link>
+          <Link to="/DistributionSolver">Distribution</Link>
         </li>
         <li>
-          <Link to="/DistributionSolver">Distribution</Link>
+          <Link to="/MiddlemanSolver">Middleman</Link>
         </li>
         <li>
           <Link to="/">Info</Link>

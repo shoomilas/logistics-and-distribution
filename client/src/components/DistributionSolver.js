@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
-import styles from "./DistributionSolver.module.css";
 import DynamicTable from "./DynamicDistributionTable"
+import styles from "./DistributionSolver.module.css";
+import stylesMain from "./MainContent.module.css";
 
 const DistributionSolver = () => {
   const rowsInputRef = useRef();
@@ -16,7 +17,7 @@ const DistributionSolver = () => {
   };
 
   return (
-    <div className={styles["distributionsolver"]}>
+    <div className={`${styles["distributionsolver"]} ${stylesMain["align-item"]}`}>
       <h1>Optimal distribution problem</h1>      
       <p>Please input the table config data</p>
       <fieldset>

@@ -44,7 +44,6 @@ const DynamicTable = (props) => {
 
   const handleDataEdit = (e, row, col) => {
     let val = parseFloat(e.currentTarget.textContent);
-    // setMsg(`data[${row}][${col}] = ${val}`);
     handleChange2d(data, setData, row, col, val);
     console.log(`[UPDATE] data[${row}][${col}] = ${val}`);
   };
@@ -52,14 +51,12 @@ const DynamicTable = (props) => {
   const handleLimitEdit = (e, row) => {
     let val = parseInt(e.currentTarget.textContent);
     handleChange1d(constraints, setConstraints, row, val);
-    // setMsg(`constraints[${row}] = ${val}`);
     console.log(`[UPDATE] constraints[${row}] = ${val}`);
   };
 
   const handleGainEdit = (e, col) => {
     let val = parseInt(e.currentTarget.textContent);
     handleChange1d(gains, setGains, col, val);
-    // setMsg(`gain[${col}] = ${val}`);
     console.log(`[UPDATE] gains[${col}] = ${val}`);
   };
 
@@ -67,14 +64,12 @@ const DynamicTable = (props) => {
     let val = parseInt(e.currentTarget.textContent);
 
     handleChange1d(pieces, setPieces, col, val);
-    // setMsg(`pieces_min[${col}] = ${val}`);
     console.log(`[UPDATE] pieces_min[${col}] = ${val}`);
   };
 
   const handlePiecesMaxEdit = (e, col) => {
     let val = parseInt(e.currentTarget.textContent);
     handleChange1d(piecesMax, setPiecesMax, col, val);
-    // setMsg(`pieces_max[${col}] = ${val}`);
     console.log(`[UPDATE] pieces_max[${col}] = ${val}`);
   };
 
