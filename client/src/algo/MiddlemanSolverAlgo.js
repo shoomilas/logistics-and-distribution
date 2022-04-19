@@ -1,14 +1,11 @@
 import _ from "lodash";
 
-// export const calculate = (input, suppliers, buyers) => {
 export const calculate = (input) => {
     let suppliers = input.supply.length
     let buyers    = input.demand.length
 
     console.log("<MIDDLEMAN_SOLVER_ALGO>");
     console.log(input);
-    // let nRows = 4; // suppliers + 1
-    // let nCols = 4; // buyers  +  1
     let nRows = suppliers + 1;
     let nCols = buyers + 1;
     let arr = initializeData(nRows, nCols, input)
@@ -34,8 +31,6 @@ const initializeData = (nRows, nCols, input) => {
     console.log("initializeData()");
     let nDemandSum = 0;
     let nSupplySum = 0;
-    let nStop = 0;
-
     let aTab = [
         [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
         [{}, {}, {}, {}, {}, {},{},{},{},{},{}],
@@ -336,7 +331,6 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
                         }
                     }
             }))
-            	// pm_DrawTable_Delta(nIteration, 1, nRowMax, nColMax, nRowSel, nColSel);
             nRet = 1;
         } else {
             nRet = null;
@@ -360,7 +354,6 @@ const wyznaczenieSciezkiDelta = (aTab, nRows, nCols) => {
     }
 
     return nRet
-    // return aTab;
 }
 
 const End = (aTab, nRows, nCols) => {
@@ -382,5 +375,4 @@ const End = (aTab, nRows, nCols) => {
     nEndProfit = nEndBigProfit - nEndExpense;
     console.log (`nEndBigProfit: ${nEndBigProfit} nEndExpense: ${nEndExpense} nEndThing: ${nEndProfit}`)
     return {nEndBigProfit: nEndBigProfit, nEndExpense: nEndExpense, nEndProfit: nEndProfit}
-
 }
